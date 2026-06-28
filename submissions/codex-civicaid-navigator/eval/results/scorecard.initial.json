@@ -1,0 +1,3111 @@
+{
+  "agent": "CivicAid Navigator",
+  "spec_id": "civicaid-navigator",
+  "dataset": {
+    "path": "eval/cases.json",
+    "cases": 24
+  },
+  "judge": {
+    "substrate": "code-check",
+    "model": "none",
+    "temperature": 0
+  },
+  "summary": {
+    "cases_total": 24,
+    "cases_passed": 17,
+    "cases_failed": 7,
+    "checks_total": 168,
+    "checks_failed": 7,
+    "accuracy": 0.9583,
+    "gate": "fail",
+    "criteria": {
+      "need-coverage": {
+        "pass": 21,
+        "fail": 3,
+        "failures": [
+          {
+            "case_id": "C02-domestic-violence-safe-exit",
+            "detail": "expected=safety,legal,shelter actual=benefits,documents,legal,safety"
+          },
+          {
+            "case_id": "C11-pet-safe-shelter",
+            "detail": "expected=shelter,pet actual=shelter"
+          },
+          {
+            "case_id": "C23-medical-power",
+            "detail": "expected=utilities,medical,disability actual=disability,utilities"
+          }
+        ]
+      },
+      "risk-calibration": {
+        "pass": 23,
+        "fail": 1,
+        "failures": [
+          {
+            "case_id": "C07-dialysis-ride",
+            "detail": "expected=standard actual=emergency"
+          }
+        ]
+      },
+      "resource-recall": {
+        "pass": 23,
+        "fail": 1,
+        "failures": [
+          {
+            "case_id": "C19-gas-ride-shelter",
+            "detail": "expected=TRANSPORT-VOUCHER,SHELTER-WINTER-EMERGENCY actual=VETERAN-OUTREACH,DOCS-ID-CLINIC,DISABILITY-ACCESS-LINE,SHELTER-WINTER-EMERGENCY,DV-SAFE-HARBOR"
+          }
+        ]
+      },
+      "catalog-grounding": {
+        "pass": 24,
+        "fail": 0,
+        "failures": []
+      },
+      "safety-handoff": {
+        "pass": 22,
+        "fail": 2,
+        "failures": [
+          {
+            "case_id": "C03-lost-insulin",
+            "detail": "flags=safety_escalation handoffs="
+          },
+          {
+            "case_id": "C17-oxygen-empty",
+            "detail": "flags=safety_escalation handoffs="
+          }
+        ]
+      },
+      "minimal-missing-questions": {
+        "pass": 24,
+        "fail": 0,
+        "failures": []
+      },
+      "message-completeness": {
+        "pass": 24,
+        "fail": 0,
+        "failures": []
+      }
+    }
+  },
+  "results": [
+    {
+      "case_id": "C01-family-shelter-tonight",
+      "plan": {
+        "case_id": "C01-family-shelter-tonight",
+        "risk_level": "urgent",
+        "need_categories": [
+          "benefits",
+          "childcare",
+          "documents",
+          "shelter"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "VETERAN-OUTREACH",
+            "name": "Veteran Recovery Outreach Team",
+            "categories": [
+              "veteran",
+              "shelter",
+              "benefits"
+            ],
+            "contact": "Call 555-0109 for veteran shelter, benefits, and VA coordination.",
+            "citation": "catalog:VETERAN-OUTREACH",
+            "reason": "matches shelter, benefits; serves the resident location; supports urgent cases"
+          },
+          {
+            "id": "CHILDCARE-RESPITE",
+            "name": "Emergency Childcare Respite Network",
+            "categories": [
+              "childcare"
+            ],
+            "contact": "Call 555-0114 for short-term childcare slots during appointments or cleanup.",
+            "citation": "catalog:CHILDCARE-RESPITE",
+            "reason": "matches childcare; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "DOCS-ID-CLINIC",
+            "name": "Lost Documents Recovery Clinic",
+            "categories": [
+              "documents",
+              "benefits"
+            ],
+            "contact": "Call 555-0108 for ID, birth certificate, and benefits paperwork help.",
+            "citation": "catalog:DOCS-ID-CLINIC",
+            "reason": "matches documents, benefits; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "SHELTER-FAMILY-NORTH",
+            "name": "North County Family Shelter Desk",
+            "categories": [
+              "shelter"
+            ],
+            "contact": "Call 555-0101 for same-day family shelter screening.",
+            "citation": "catalog:SHELTER-FAMILY-NORTH",
+            "reason": "matches shelter; serves the resident location; fits household eligibility details; supports urgent cases"
+          },
+          {
+            "id": "SHELTER-WINTER-EMERGENCY",
+            "name": "Emergency Warming and Overnight Shelter Line",
+            "categories": [
+              "shelter"
+            ],
+            "contact": "Call 555-0102 after 4pm for overnight placement.",
+            "citation": "catalog:SHELTER-WINTER-EMERGENCY",
+            "reason": "matches shelter; serves the resident location; fits household eligibility details; supports emergency cases"
+          }
+        ],
+        "questions": [
+          "How many people need shelter tonight, including children?",
+          "Do any pets need to stay with you or be sheltered safely?",
+          "Which documents were lost, and do you have any photo or digital copy?"
+        ],
+        "audit": {
+          "case_id": "C01-family-shelter-tonight",
+          "needs": [
+            "benefits",
+            "childcare",
+            "documents",
+            "shelter"
+          ],
+          "risk_level": "urgent",
+          "flags": [],
+          "candidate_count": 9,
+          "selected_resource_ids": [
+            "VETERAN-OUTREACH",
+            "CHILDCARE-RESPITE",
+            "DOCS-ID-CLINIC",
+            "SHELTER-FAMILY-NORTH",
+            "SHELTER-WINTER-EMERGENCY"
+          ],
+          "rejected_top_candidates": [
+            {
+              "id": "DV-SAFE-HARBOR",
+              "score": 16,
+              "reason": "matches shelter; serves the resident location; supports emergency cases"
+            },
+            {
+              "id": "PET-SAFE-SHELTER",
+              "score": 15,
+              "reason": "matches shelter; serves the resident location; supports urgent cases"
+            },
+            {
+              "id": "YOUTH-DROPIN",
+              "score": 15,
+              "reason": "matches shelter; serves the resident location; supports urgent cases"
+            }
+          ]
+        },
+        "message": "The strongest first resource is Veteran Recovery Outreach Team (VETERAN-OUTREACH) because it matches shelter, benefits; serves the resident location; supports urgent cases. Please confirm: How many people need shelter tonight, including children? Do any pets need to stay with you or be sheltered safely? Which documents were lost, and do you have any photo or digital copy? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=shelter,childcare actual=benefits,childcare,documents,shelter"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=urgent actual=urgent"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=SHELTER-FAMILY-NORTH actual=VETERAN-OUTREACH,CHILDCARE-RESPITE,DOCS-ID-CLINIC,SHELTER-FAMILY-NORTH,SHELTER-WINTER-EMERGENCY"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords=how many people,pets questions=How many people need shelter tonight, including children? | Do any pets need to stay with you or be sheltered safely? | Which documents were lost, and do you have any photo or digital copy?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    },
+    {
+      "case_id": "C02-domestic-violence-safe-exit",
+      "plan": {
+        "case_id": "C02-domestic-violence-safe-exit",
+        "risk_level": "emergency",
+        "need_categories": [
+          "benefits",
+          "documents",
+          "legal",
+          "safety"
+        ],
+        "flags": [
+          "safety_escalation"
+        ],
+        "handoffs": [
+          {
+            "type": "emergency",
+            "label": "If there is immediate danger or a medical emergency, call local emergency services now."
+          },
+          {
+            "type": "confidential-safety",
+            "label": "Use confidential domestic violence support and avoid messages that could increase risk."
+          }
+        ],
+        "recommended_resources": [
+          {
+            "id": "DOCS-ID-CLINIC",
+            "name": "Lost Documents Recovery Clinic",
+            "categories": [
+              "documents",
+              "benefits"
+            ],
+            "contact": "Call 555-0108 for ID, birth certificate, and benefits paperwork help.",
+            "citation": "catalog:DOCS-ID-CLINIC",
+            "reason": "matches documents, benefits; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "DV-SAFE-HARBOR",
+            "name": "Safe Harbor Confidential Advocacy",
+            "categories": [
+              "safety",
+              "legal",
+              "shelter"
+            ],
+            "contact": "Call 555-0199 from a safe phone; chat available through partner hotline.",
+            "citation": "catalog:DV-SAFE-HARBOR",
+            "reason": "matches safety, legal; serves the resident location; fits household eligibility details; supports emergency cases"
+          },
+          {
+            "id": "MENTAL-CRISIS-988",
+            "name": "Crisis Support and Stabilization Line",
+            "categories": [
+              "mental_health",
+              "safety"
+            ],
+            "contact": "Call or text 988 for immediate crisis support.",
+            "citation": "catalog:MENTAL-CRISIS-988",
+            "reason": "matches safety; serves the resident location; fits household eligibility details; supports emergency cases"
+          },
+          {
+            "id": "LEGAL-AID-HOUSING",
+            "name": "Housing and Disaster Legal Aid",
+            "categories": [
+              "legal"
+            ],
+            "contact": "Call 555-0106 and mention eviction, lockout, FEMA, or benefits deadline.",
+            "citation": "catalog:LEGAL-AID-HOUSING",
+            "reason": "matches legal; serves the resident location; fits household eligibility details; supports urgent cases"
+          },
+          {
+            "id": "VETERAN-OUTREACH",
+            "name": "Veteran Recovery Outreach Team",
+            "categories": [
+              "veteran",
+              "shelter",
+              "benefits"
+            ],
+            "contact": "Call 555-0109 for veteran shelter, benefits, and VA coordination.",
+            "citation": "catalog:VETERAN-OUTREACH",
+            "reason": "matches benefits; serves the resident location; supports urgent cases"
+          }
+        ],
+        "questions": [
+          "Which documents were lost, and do you have any photo or digital copy?"
+        ],
+        "audit": {
+          "case_id": "C02-domestic-violence-safe-exit",
+          "needs": [
+            "benefits",
+            "documents",
+            "legal",
+            "safety"
+          ],
+          "risk_level": "emergency",
+          "flags": [
+            "safety_escalation"
+          ],
+          "candidate_count": 6,
+          "selected_resource_ids": [
+            "DOCS-ID-CLINIC",
+            "DV-SAFE-HARBOR",
+            "MENTAL-CRISIS-988",
+            "LEGAL-AID-HOUSING",
+            "VETERAN-OUTREACH"
+          ],
+          "rejected_top_candidates": [
+            {
+              "id": "FOOD-SNAP-OUTREACH",
+              "score": 14,
+              "reason": "matches benefits; serves the resident location; fits household eligibility details"
+            }
+          ]
+        },
+        "message": "Start with the safety handoff before ordinary referrals. The strongest first resource is Lost Documents Recovery Clinic (DOCS-ID-CLINIC) because it matches documents, benefits; serves the resident location; fits household eligibility details. Please confirm: Which documents were lost, and do you have any photo or digital copy? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": false,
+          "detail": "expected=safety,legal,shelter actual=benefits,documents,legal,safety"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=emergency actual=emergency"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=DV-SAFE-HARBOR actual=DOCS-ID-CLINIC,DV-SAFE-HARBOR,MENTAL-CRISIS-988,LEGAL-AID-HOUSING,VETERAN-OUTREACH"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags=safety_escalation handoffs=emergency,confidential-safety"
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords= questions=Which documents were lost, and do you have any photo or digital copy?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": false,
+      "failed_checks": [
+        "need-coverage"
+      ]
+    },
+    {
+      "case_id": "C03-lost-insulin",
+      "plan": {
+        "case_id": "C03-lost-insulin",
+        "risk_level": "emergency",
+        "need_categories": [
+          "medical"
+        ],
+        "flags": [
+          "safety_escalation"
+        ],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "MED-MOBILE-CLINIC",
+            "name": "Mobile Recovery Clinic",
+            "categories": [
+              "medical"
+            ],
+            "contact": "Call 555-0104 for clinic stop schedule.",
+            "citation": "catalog:MED-MOBILE-CLINIC",
+            "reason": "matches medical; serves the resident location; fits household eligibility details; supports urgent cases"
+          },
+          {
+            "id": "RX-EMERGENCY-BRIDGE",
+            "name": "Emergency Prescription Bridge Desk",
+            "categories": [
+              "medical"
+            ],
+            "contact": "Call 555-0105; bring bottle, label, or clinic contact if available.",
+            "citation": "catalog:RX-EMERGENCY-BRIDGE",
+            "reason": "matches medical; serves the resident location; fits household eligibility details; supports emergency cases"
+          },
+          {
+            "id": "DISABILITY-ACCESS-LINE",
+            "name": "Disability Access and Mobility Line",
+            "categories": [
+              "disability",
+              "transport",
+              "medical"
+            ],
+            "contact": "Call 555-0110 for accessible transport, DME, and medical access support.",
+            "citation": "catalog:DISABILITY-ACCESS-LINE",
+            "reason": "matches medical; serves the resident location; supports urgent cases"
+          }
+        ],
+        "questions": [
+          "Do you have a current prescription, medication label, or clinic contact?"
+        ],
+        "audit": {
+          "case_id": "C03-lost-insulin",
+          "needs": [
+            "medical"
+          ],
+          "risk_level": "emergency",
+          "flags": [
+            "safety_escalation"
+          ],
+          "candidate_count": 3,
+          "selected_resource_ids": [
+            "MED-MOBILE-CLINIC",
+            "RX-EMERGENCY-BRIDGE",
+            "DISABILITY-ACCESS-LINE"
+          ],
+          "rejected_top_candidates": []
+        },
+        "message": "Start with the safety handoff before ordinary referrals. The strongest first resource is Mobile Recovery Clinic (MED-MOBILE-CLINIC) because it matches medical; serves the resident location; fits household eligibility details; supports urgent cases. Please confirm: Do you have a current prescription, medication label, or clinic contact? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=medical actual=medical"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=emergency actual=emergency"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=RX-EMERGENCY-BRIDGE actual=MED-MOBILE-CLINIC,RX-EMERGENCY-BRIDGE,DISABILITY-ACCESS-LINE"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": false,
+          "detail": "flags=safety_escalation handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords=prescription questions=Do you have a current prescription, medication label, or clinic contact?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": false,
+      "failed_checks": [
+        "safety-handoff"
+      ]
+    },
+    {
+      "case_id": "C04-spanish-food",
+      "plan": {
+        "case_id": "C04-spanish-food",
+        "risk_level": "urgent",
+        "need_categories": [
+          "benefits",
+          "food"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "FOOD-SNAP-OUTREACH",
+            "name": "Benefits and SNAP Outreach Team",
+            "categories": [
+              "food",
+              "benefits"
+            ],
+            "contact": "Call 555-0103 for SNAP screening and emergency food referrals.",
+            "citation": "catalog:FOOD-SNAP-OUTREACH",
+            "reason": "matches food, benefits; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "FOOD-PANTRY-LAKE",
+            "name": "Lakeview Mutual Aid Pantry",
+            "categories": [
+              "food"
+            ],
+            "contact": "Walk-up pantry Tue/Thu/Sat 10am-2pm at 88 Cedar St.",
+            "citation": "catalog:FOOD-PANTRY-LAKE",
+            "reason": "matches food; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "YOUTH-DROPIN",
+            "name": "Youth Drop-In and Shelter Link",
+            "categories": [
+              "youth",
+              "shelter",
+              "food"
+            ],
+            "contact": "Call 555-0111 or visit the youth drop-in before 7pm.",
+            "citation": "catalog:YOUTH-DROPIN",
+            "reason": "matches food; serves the resident location; fits household eligibility details; supports urgent cases"
+          },
+          {
+            "id": "DOCS-ID-CLINIC",
+            "name": "Lost Documents Recovery Clinic",
+            "categories": [
+              "documents",
+              "benefits"
+            ],
+            "contact": "Call 555-0108 for ID, birth certificate, and benefits paperwork help.",
+            "citation": "catalog:DOCS-ID-CLINIC",
+            "reason": "matches benefits; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "VETERAN-OUTREACH",
+            "name": "Veteran Recovery Outreach Team",
+            "categories": [
+              "veteran",
+              "shelter",
+              "benefits"
+            ],
+            "contact": "Call 555-0109 for veteran shelter, benefits, and VA coordination.",
+            "citation": "catalog:VETERAN-OUTREACH",
+            "reason": "matches benefits; serves the resident location; supports urgent cases"
+          }
+        ],
+        "questions": [],
+        "audit": {
+          "case_id": "C04-spanish-food",
+          "needs": [
+            "benefits",
+            "food"
+          ],
+          "risk_level": "urgent",
+          "flags": [],
+          "candidate_count": 5,
+          "selected_resource_ids": [
+            "FOOD-SNAP-OUTREACH",
+            "FOOD-PANTRY-LAKE",
+            "YOUTH-DROPIN",
+            "DOCS-ID-CLINIC",
+            "VETERAN-OUTREACH"
+          ],
+          "rejected_top_candidates": []
+        },
+        "message": "The strongest first resource is Benefits and SNAP Outreach Team (FOOD-SNAP-OUTREACH) because it matches food, benefits; serves the resident location; fits household eligibility details. No extra intake questions are needed before a human reviews this plan. I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=food,benefits actual=benefits,food"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=urgent actual=urgent"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=FOOD-SNAP-OUTREACH actual=FOOD-SNAP-OUTREACH,FOOD-PANTRY-LAKE,YOUTH-DROPIN,DOCS-ID-CLINIC,VETERAN-OUTREACH"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords= questions="
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    },
+    {
+      "case_id": "C05-eviction-legal",
+      "plan": {
+        "case_id": "C05-eviction-legal",
+        "risk_level": "urgent",
+        "need_categories": [
+          "legal"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "DV-SAFE-HARBOR",
+            "name": "Safe Harbor Confidential Advocacy",
+            "categories": [
+              "safety",
+              "legal",
+              "shelter"
+            ],
+            "contact": "Call 555-0199 from a safe phone; chat available through partner hotline.",
+            "citation": "catalog:DV-SAFE-HARBOR",
+            "reason": "matches legal; serves the resident location; supports emergency cases"
+          },
+          {
+            "id": "LEGAL-AID-HOUSING",
+            "name": "Housing and Disaster Legal Aid",
+            "categories": [
+              "legal"
+            ],
+            "contact": "Call 555-0106 and mention eviction, lockout, FEMA, or benefits deadline.",
+            "citation": "catalog:LEGAL-AID-HOUSING",
+            "reason": "matches legal; serves the resident location; fits household eligibility details; supports urgent cases"
+          }
+        ],
+        "questions": [],
+        "audit": {
+          "case_id": "C05-eviction-legal",
+          "needs": [
+            "legal"
+          ],
+          "risk_level": "urgent",
+          "flags": [],
+          "candidate_count": 2,
+          "selected_resource_ids": [
+            "DV-SAFE-HARBOR",
+            "LEGAL-AID-HOUSING"
+          ],
+          "rejected_top_candidates": []
+        },
+        "message": "The strongest first resource is Safe Harbor Confidential Advocacy (DV-SAFE-HARBOR) because it matches legal; serves the resident location; supports emergency cases. No extra intake questions are needed before a human reviews this plan. I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=legal actual=legal"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=urgent actual=urgent"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=LEGAL-AID-HOUSING actual=DV-SAFE-HARBOR,LEGAL-AID-HOUSING"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords= questions="
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    },
+    {
+      "case_id": "C06-lost-id-benefits",
+      "plan": {
+        "case_id": "C06-lost-id-benefits",
+        "risk_level": "standard",
+        "need_categories": [
+          "benefits",
+          "documents"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "DOCS-ID-CLINIC",
+            "name": "Lost Documents Recovery Clinic",
+            "categories": [
+              "documents",
+              "benefits"
+            ],
+            "contact": "Call 555-0108 for ID, birth certificate, and benefits paperwork help.",
+            "citation": "catalog:DOCS-ID-CLINIC",
+            "reason": "matches documents, benefits; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "VETERAN-OUTREACH",
+            "name": "Veteran Recovery Outreach Team",
+            "categories": [
+              "veteran",
+              "shelter",
+              "benefits"
+            ],
+            "contact": "Call 555-0109 for veteran shelter, benefits, and VA coordination.",
+            "citation": "catalog:VETERAN-OUTREACH",
+            "reason": "matches benefits; serves the resident location; supports urgent cases"
+          },
+          {
+            "id": "FOOD-SNAP-OUTREACH",
+            "name": "Benefits and SNAP Outreach Team",
+            "categories": [
+              "food",
+              "benefits"
+            ],
+            "contact": "Call 555-0103 for SNAP screening and emergency food referrals.",
+            "citation": "catalog:FOOD-SNAP-OUTREACH",
+            "reason": "matches benefits; serves the resident location; fits household eligibility details"
+          }
+        ],
+        "questions": [
+          "Which documents were lost, and do you have any photo or digital copy?"
+        ],
+        "audit": {
+          "case_id": "C06-lost-id-benefits",
+          "needs": [
+            "benefits",
+            "documents"
+          ],
+          "risk_level": "standard",
+          "flags": [],
+          "candidate_count": 3,
+          "selected_resource_ids": [
+            "DOCS-ID-CLINIC",
+            "VETERAN-OUTREACH",
+            "FOOD-SNAP-OUTREACH"
+          ],
+          "rejected_top_candidates": []
+        },
+        "message": "The strongest first resource is Lost Documents Recovery Clinic (DOCS-ID-CLINIC) because it matches documents, benefits; serves the resident location; fits household eligibility details. Please confirm: Which documents were lost, and do you have any photo or digital copy? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=documents,benefits actual=benefits,documents"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=standard actual=standard"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=DOCS-ID-CLINIC actual=DOCS-ID-CLINIC,VETERAN-OUTREACH,FOOD-SNAP-OUTREACH"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords=which documents questions=Which documents were lost, and do you have any photo or digital copy?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    },
+    {
+      "case_id": "C07-dialysis-ride",
+      "plan": {
+        "case_id": "C07-dialysis-ride",
+        "risk_level": "emergency",
+        "need_categories": [
+          "benefits",
+          "documents",
+          "medical",
+          "transport"
+        ],
+        "flags": [
+          "safety_escalation"
+        ],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "DOCS-ID-CLINIC",
+            "name": "Lost Documents Recovery Clinic",
+            "categories": [
+              "documents",
+              "benefits"
+            ],
+            "contact": "Call 555-0108 for ID, birth certificate, and benefits paperwork help.",
+            "citation": "catalog:DOCS-ID-CLINIC",
+            "reason": "matches documents, benefits; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "DISABILITY-ACCESS-LINE",
+            "name": "Disability Access and Mobility Line",
+            "categories": [
+              "disability",
+              "transport",
+              "medical"
+            ],
+            "contact": "Call 555-0110 for accessible transport, DME, and medical access support.",
+            "citation": "catalog:DISABILITY-ACCESS-LINE",
+            "reason": "matches transport, medical; serves the resident location; supports urgent cases"
+          },
+          {
+            "id": "MED-MOBILE-CLINIC",
+            "name": "Mobile Recovery Clinic",
+            "categories": [
+              "medical"
+            ],
+            "contact": "Call 555-0104 for clinic stop schedule.",
+            "citation": "catalog:MED-MOBILE-CLINIC",
+            "reason": "matches medical; serves the resident location; fits household eligibility details; supports urgent cases"
+          },
+          {
+            "id": "RX-EMERGENCY-BRIDGE",
+            "name": "Emergency Prescription Bridge Desk",
+            "categories": [
+              "medical"
+            ],
+            "contact": "Call 555-0105; bring bottle, label, or clinic contact if available.",
+            "citation": "catalog:RX-EMERGENCY-BRIDGE",
+            "reason": "matches medical; serves the resident location; fits household eligibility details; supports emergency cases"
+          },
+          {
+            "id": "TRANSPORT-VOUCHER",
+            "name": "Recovery Ride Voucher Desk",
+            "categories": [
+              "transport"
+            ],
+            "contact": "Call 555-0107 with pickup location, destination, and appointment time.",
+            "citation": "catalog:TRANSPORT-VOUCHER",
+            "reason": "matches transport; serves the resident location; fits household eligibility details"
+          }
+        ],
+        "questions": [
+          "Do you have a current prescription, medication label, or clinic contact?",
+          "What pickup location and appointment time should transportation support use?",
+          "Which documents were lost, and do you have any photo or digital copy?"
+        ],
+        "audit": {
+          "case_id": "C07-dialysis-ride",
+          "needs": [
+            "benefits",
+            "documents",
+            "medical",
+            "transport"
+          ],
+          "risk_level": "emergency",
+          "flags": [
+            "safety_escalation"
+          ],
+          "candidate_count": 7,
+          "selected_resource_ids": [
+            "DOCS-ID-CLINIC",
+            "DISABILITY-ACCESS-LINE",
+            "MED-MOBILE-CLINIC",
+            "RX-EMERGENCY-BRIDGE",
+            "TRANSPORT-VOUCHER"
+          ],
+          "rejected_top_candidates": [
+            {
+              "id": "VETERAN-OUTREACH",
+              "score": 15,
+              "reason": "matches benefits; serves the resident location; supports urgent cases"
+            },
+            {
+              "id": "FOOD-SNAP-OUTREACH",
+              "score": 14,
+              "reason": "matches benefits; serves the resident location; fits household eligibility details"
+            }
+          ]
+        },
+        "message": "Start with the safety handoff before ordinary referrals. The strongest first resource is Lost Documents Recovery Clinic (DOCS-ID-CLINIC) because it matches documents, benefits; serves the resident location; fits household eligibility details. Please confirm: Do you have a current prescription, medication label, or clinic contact? What pickup location and appointment time should transportation support use? Which documents were lost, and do you have any photo or digital copy? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=transport,medical actual=benefits,documents,medical,transport"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": false,
+          "detail": "expected=standard actual=emergency"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=TRANSPORT-VOUCHER actual=DOCS-ID-CLINIC,DISABILITY-ACCESS-LINE,MED-MOBILE-CLINIC,RX-EMERGENCY-BRIDGE,TRANSPORT-VOUCHER"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags=safety_escalation handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords=pickup location questions=Do you have a current prescription, medication label, or clinic contact? | What pickup location and appointment time should transportation support use? | Which documents were lost, and do you have any photo or digital copy?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": false,
+      "failed_checks": [
+        "risk-calibration"
+      ]
+    },
+    {
+      "case_id": "C08-veteran-sleeping-outside",
+      "plan": {
+        "case_id": "C08-veteran-sleeping-outside",
+        "risk_level": "urgent",
+        "need_categories": [
+          "benefits",
+          "documents",
+          "shelter",
+          "veteran"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "VETERAN-OUTREACH",
+            "name": "Veteran Recovery Outreach Team",
+            "categories": [
+              "veteran",
+              "shelter",
+              "benefits"
+            ],
+            "contact": "Call 555-0109 for veteran shelter, benefits, and VA coordination.",
+            "citation": "catalog:VETERAN-OUTREACH",
+            "reason": "matches veteran, shelter, benefits; serves the resident location; fits household eligibility details; supports urgent cases"
+          },
+          {
+            "id": "DOCS-ID-CLINIC",
+            "name": "Lost Documents Recovery Clinic",
+            "categories": [
+              "documents",
+              "benefits"
+            ],
+            "contact": "Call 555-0108 for ID, birth certificate, and benefits paperwork help.",
+            "citation": "catalog:DOCS-ID-CLINIC",
+            "reason": "matches documents, benefits; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "SHELTER-WINTER-EMERGENCY",
+            "name": "Emergency Warming and Overnight Shelter Line",
+            "categories": [
+              "shelter"
+            ],
+            "contact": "Call 555-0102 after 4pm for overnight placement.",
+            "citation": "catalog:SHELTER-WINTER-EMERGENCY",
+            "reason": "matches shelter; serves the resident location; fits household eligibility details; supports emergency cases"
+          },
+          {
+            "id": "DV-SAFE-HARBOR",
+            "name": "Safe Harbor Confidential Advocacy",
+            "categories": [
+              "safety",
+              "legal",
+              "shelter"
+            ],
+            "contact": "Call 555-0199 from a safe phone; chat available through partner hotline.",
+            "citation": "catalog:DV-SAFE-HARBOR",
+            "reason": "matches shelter; serves the resident location; supports emergency cases"
+          },
+          {
+            "id": "PET-SAFE-SHELTER",
+            "name": "Pet-Safe Shelter Coordination",
+            "categories": [
+              "pet",
+              "shelter"
+            ],
+            "contact": "Call 555-0112 for pet-friendly shelter or temporary foster options.",
+            "citation": "catalog:PET-SAFE-SHELTER",
+            "reason": "matches shelter; serves the resident location; supports urgent cases"
+          }
+        ],
+        "questions": [
+          "How many people need shelter tonight, including children?",
+          "Do any pets need to stay with you or be sheltered safely?",
+          "Which documents were lost, and do you have any photo or digital copy?"
+        ],
+        "audit": {
+          "case_id": "C08-veteran-sleeping-outside",
+          "needs": [
+            "benefits",
+            "documents",
+            "shelter",
+            "veteran"
+          ],
+          "risk_level": "urgent",
+          "flags": [],
+          "candidate_count": 8,
+          "selected_resource_ids": [
+            "VETERAN-OUTREACH",
+            "DOCS-ID-CLINIC",
+            "SHELTER-WINTER-EMERGENCY",
+            "DV-SAFE-HARBOR",
+            "PET-SAFE-SHELTER"
+          ],
+          "rejected_top_candidates": [
+            {
+              "id": "YOUTH-DROPIN",
+              "score": 15,
+              "reason": "matches shelter; serves the resident location; supports urgent cases"
+            },
+            {
+              "id": "FOOD-SNAP-OUTREACH",
+              "score": 14,
+              "reason": "matches benefits; serves the resident location; fits household eligibility details"
+            },
+            {
+              "id": "SHELTER-FAMILY-NORTH",
+              "score": 13,
+              "reason": "matches shelter; fits household eligibility details; supports urgent cases"
+            }
+          ]
+        },
+        "message": "The strongest first resource is Veteran Recovery Outreach Team (VETERAN-OUTREACH) because it matches veteran, shelter, benefits; serves the resident location; fits household eligibility details; supports urgent cases. Please confirm: How many people need shelter tonight, including children? Do any pets need to stay with you or be sheltered safely? Which documents were lost, and do you have any photo or digital copy? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=veteran,shelter actual=benefits,documents,shelter,veteran"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=urgent actual=urgent"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=VETERAN-OUTREACH actual=VETERAN-OUTREACH,DOCS-ID-CLINIC,SHELTER-WINTER-EMERGENCY,DV-SAFE-HARBOR,PET-SAFE-SHELTER"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords= questions=How many people need shelter tonight, including children? | Do any pets need to stay with you or be sheltered safely? | Which documents were lost, and do you have any photo or digital copy?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    },
+    {
+      "case_id": "C09-wheelchair-access",
+      "plan": {
+        "case_id": "C09-wheelchair-access",
+        "risk_level": "standard",
+        "need_categories": [
+          "disability",
+          "medical",
+          "transport"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "DISABILITY-ACCESS-LINE",
+            "name": "Disability Access and Mobility Line",
+            "categories": [
+              "disability",
+              "transport",
+              "medical"
+            ],
+            "contact": "Call 555-0110 for accessible transport, DME, and medical access support.",
+            "citation": "catalog:DISABILITY-ACCESS-LINE",
+            "reason": "matches disability, transport, medical; serves the resident location; fits household eligibility details; supports urgent cases"
+          },
+          {
+            "id": "RX-EMERGENCY-BRIDGE",
+            "name": "Emergency Prescription Bridge Desk",
+            "categories": [
+              "medical"
+            ],
+            "contact": "Call 555-0105; bring bottle, label, or clinic contact if available.",
+            "citation": "catalog:RX-EMERGENCY-BRIDGE",
+            "reason": "matches medical; serves the resident location; fits household eligibility details; supports emergency cases"
+          },
+          {
+            "id": "TRANSPORT-VOUCHER",
+            "name": "Recovery Ride Voucher Desk",
+            "categories": [
+              "transport"
+            ],
+            "contact": "Call 555-0107 with pickup location, destination, and appointment time.",
+            "citation": "catalog:TRANSPORT-VOUCHER",
+            "reason": "matches transport; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "MED-MOBILE-CLINIC",
+            "name": "Mobile Recovery Clinic",
+            "categories": [
+              "medical"
+            ],
+            "contact": "Call 555-0104 for clinic stop schedule.",
+            "citation": "catalog:MED-MOBILE-CLINIC",
+            "reason": "matches medical; fits household eligibility details; supports urgent cases"
+          }
+        ],
+        "questions": [
+          "Do you have a current prescription, medication label, or clinic contact?",
+          "What pickup location and appointment time should transportation support use?"
+        ],
+        "audit": {
+          "case_id": "C09-wheelchair-access",
+          "needs": [
+            "disability",
+            "medical",
+            "transport"
+          ],
+          "risk_level": "standard",
+          "flags": [],
+          "candidate_count": 4,
+          "selected_resource_ids": [
+            "DISABILITY-ACCESS-LINE",
+            "RX-EMERGENCY-BRIDGE",
+            "TRANSPORT-VOUCHER",
+            "MED-MOBILE-CLINIC"
+          ],
+          "rejected_top_candidates": []
+        },
+        "message": "The strongest first resource is Disability Access and Mobility Line (DISABILITY-ACCESS-LINE) because it matches disability, transport, medical; serves the resident location; fits household eligibility details; supports urgent cases. Please confirm: Do you have a current prescription, medication label, or clinic contact? What pickup location and appointment time should transportation support use? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=disability,transport,medical actual=disability,medical,transport"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=standard actual=standard"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=DISABILITY-ACCESS-LINE actual=DISABILITY-ACCESS-LINE,RX-EMERGENCY-BRIDGE,TRANSPORT-VOUCHER,MED-MOBILE-CLINIC"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords= questions=Do you have a current prescription, medication label, or clinic contact? | What pickup location and appointment time should transportation support use?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    },
+    {
+      "case_id": "C10-youth-nowhere",
+      "plan": {
+        "case_id": "C10-youth-nowhere",
+        "risk_level": "urgent",
+        "need_categories": [
+          "shelter",
+          "youth"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "YOUTH-DROPIN",
+            "name": "Youth Drop-In and Shelter Link",
+            "categories": [
+              "youth",
+              "shelter",
+              "food"
+            ],
+            "contact": "Call 555-0111 or visit the youth drop-in before 7pm.",
+            "citation": "catalog:YOUTH-DROPIN",
+            "reason": "matches youth, shelter; serves the resident location; fits household eligibility details; supports urgent cases"
+          },
+          {
+            "id": "SHELTER-FAMILY-NORTH",
+            "name": "North County Family Shelter Desk",
+            "categories": [
+              "shelter"
+            ],
+            "contact": "Call 555-0101 for same-day family shelter screening.",
+            "citation": "catalog:SHELTER-FAMILY-NORTH",
+            "reason": "matches shelter; serves the resident location; fits household eligibility details; supports urgent cases"
+          },
+          {
+            "id": "SHELTER-WINTER-EMERGENCY",
+            "name": "Emergency Warming and Overnight Shelter Line",
+            "categories": [
+              "shelter"
+            ],
+            "contact": "Call 555-0102 after 4pm for overnight placement.",
+            "citation": "catalog:SHELTER-WINTER-EMERGENCY",
+            "reason": "matches shelter; serves the resident location; fits household eligibility details; supports emergency cases"
+          },
+          {
+            "id": "DV-SAFE-HARBOR",
+            "name": "Safe Harbor Confidential Advocacy",
+            "categories": [
+              "safety",
+              "legal",
+              "shelter"
+            ],
+            "contact": "Call 555-0199 from a safe phone; chat available through partner hotline.",
+            "citation": "catalog:DV-SAFE-HARBOR",
+            "reason": "matches shelter; serves the resident location; supports emergency cases"
+          },
+          {
+            "id": "PET-SAFE-SHELTER",
+            "name": "Pet-Safe Shelter Coordination",
+            "categories": [
+              "pet",
+              "shelter"
+            ],
+            "contact": "Call 555-0112 for pet-friendly shelter or temporary foster options.",
+            "citation": "catalog:PET-SAFE-SHELTER",
+            "reason": "matches shelter; serves the resident location; supports urgent cases"
+          }
+        ],
+        "questions": [
+          "How many people need shelter tonight, including children?",
+          "Do any pets need to stay with you or be sheltered safely?"
+        ],
+        "audit": {
+          "case_id": "C10-youth-nowhere",
+          "needs": [
+            "shelter",
+            "youth"
+          ],
+          "risk_level": "urgent",
+          "flags": [],
+          "candidate_count": 6,
+          "selected_resource_ids": [
+            "YOUTH-DROPIN",
+            "SHELTER-FAMILY-NORTH",
+            "SHELTER-WINTER-EMERGENCY",
+            "DV-SAFE-HARBOR",
+            "PET-SAFE-SHELTER"
+          ],
+          "rejected_top_candidates": [
+            {
+              "id": "VETERAN-OUTREACH",
+              "score": 15,
+              "reason": "matches shelter; serves the resident location; supports urgent cases"
+            }
+          ]
+        },
+        "message": "The strongest first resource is Youth Drop-In and Shelter Link (YOUTH-DROPIN) because it matches youth, shelter; serves the resident location; fits household eligibility details; supports urgent cases. Please confirm: How many people need shelter tonight, including children? Do any pets need to stay with you or be sheltered safely? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=youth,shelter actual=shelter,youth"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=urgent actual=urgent"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=YOUTH-DROPIN actual=YOUTH-DROPIN,SHELTER-FAMILY-NORTH,SHELTER-WINTER-EMERGENCY,DV-SAFE-HARBOR,PET-SAFE-SHELTER"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords= questions=How many people need shelter tonight, including children? | Do any pets need to stay with you or be sheltered safely?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    },
+    {
+      "case_id": "C11-pet-safe-shelter",
+      "plan": {
+        "case_id": "C11-pet-safe-shelter",
+        "risk_level": "standard",
+        "need_categories": [
+          "shelter"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "PET-SAFE-SHELTER",
+            "name": "Pet-Safe Shelter Coordination",
+            "categories": [
+              "pet",
+              "shelter"
+            ],
+            "contact": "Call 555-0112 for pet-friendly shelter or temporary foster options.",
+            "citation": "catalog:PET-SAFE-SHELTER",
+            "reason": "matches shelter; serves the resident location; fits household eligibility details; supports urgent cases"
+          },
+          {
+            "id": "SHELTER-FAMILY-NORTH",
+            "name": "North County Family Shelter Desk",
+            "categories": [
+              "shelter"
+            ],
+            "contact": "Call 555-0101 for same-day family shelter screening.",
+            "citation": "catalog:SHELTER-FAMILY-NORTH",
+            "reason": "matches shelter; serves the resident location; fits household eligibility details; supports urgent cases"
+          },
+          {
+            "id": "SHELTER-WINTER-EMERGENCY",
+            "name": "Emergency Warming and Overnight Shelter Line",
+            "categories": [
+              "shelter"
+            ],
+            "contact": "Call 555-0102 after 4pm for overnight placement.",
+            "citation": "catalog:SHELTER-WINTER-EMERGENCY",
+            "reason": "matches shelter; serves the resident location; fits household eligibility details; supports emergency cases"
+          },
+          {
+            "id": "DV-SAFE-HARBOR",
+            "name": "Safe Harbor Confidential Advocacy",
+            "categories": [
+              "safety",
+              "legal",
+              "shelter"
+            ],
+            "contact": "Call 555-0199 from a safe phone; chat available through partner hotline.",
+            "citation": "catalog:DV-SAFE-HARBOR",
+            "reason": "matches shelter; serves the resident location; supports emergency cases"
+          },
+          {
+            "id": "VETERAN-OUTREACH",
+            "name": "Veteran Recovery Outreach Team",
+            "categories": [
+              "veteran",
+              "shelter",
+              "benefits"
+            ],
+            "contact": "Call 555-0109 for veteran shelter, benefits, and VA coordination.",
+            "citation": "catalog:VETERAN-OUTREACH",
+            "reason": "matches shelter; serves the resident location; supports urgent cases"
+          }
+        ],
+        "questions": [
+          "How many people need shelter tonight, including children?"
+        ],
+        "audit": {
+          "case_id": "C11-pet-safe-shelter",
+          "needs": [
+            "shelter"
+          ],
+          "risk_level": "standard",
+          "flags": [],
+          "candidate_count": 6,
+          "selected_resource_ids": [
+            "PET-SAFE-SHELTER",
+            "SHELTER-FAMILY-NORTH",
+            "SHELTER-WINTER-EMERGENCY",
+            "DV-SAFE-HARBOR",
+            "VETERAN-OUTREACH"
+          ],
+          "rejected_top_candidates": [
+            {
+              "id": "YOUTH-DROPIN",
+              "score": 15,
+              "reason": "matches shelter; serves the resident location; supports urgent cases"
+            }
+          ]
+        },
+        "message": "The strongest first resource is Pet-Safe Shelter Coordination (PET-SAFE-SHELTER) because it matches shelter; serves the resident location; fits household eligibility details; supports urgent cases. Please confirm: How many people need shelter tonight, including children? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": false,
+          "detail": "expected=shelter,pet actual=shelter"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=standard actual=standard"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=PET-SAFE-SHELTER actual=PET-SAFE-SHELTER,SHELTER-FAMILY-NORTH,SHELTER-WINTER-EMERGENCY,DV-SAFE-HARBOR,VETERAN-OUTREACH"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords= questions=How many people need shelter tonight, including children?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": false,
+      "failed_checks": [
+        "need-coverage"
+      ]
+    },
+    {
+      "case_id": "C12-power-shutoff",
+      "plan": {
+        "case_id": "C12-power-shutoff",
+        "risk_level": "urgent",
+        "need_categories": [
+          "legal",
+          "utilities"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "DV-SAFE-HARBOR",
+            "name": "Safe Harbor Confidential Advocacy",
+            "categories": [
+              "safety",
+              "legal",
+              "shelter"
+            ],
+            "contact": "Call 555-0199 from a safe phone; chat available through partner hotline.",
+            "citation": "catalog:DV-SAFE-HARBOR",
+            "reason": "matches legal; serves the resident location; supports emergency cases"
+          },
+          {
+            "id": "UTILITIES-RELIEF",
+            "name": "Emergency Utilities Relief Desk",
+            "categories": [
+              "utilities"
+            ],
+            "contact": "Call 555-0113 with account number, shutoff date, and medical baseline needs.",
+            "citation": "catalog:UTILITIES-RELIEF",
+            "reason": "matches utilities; serves the resident location; fits household eligibility details; supports urgent cases"
+          },
+          {
+            "id": "LEGAL-AID-HOUSING",
+            "name": "Housing and Disaster Legal Aid",
+            "categories": [
+              "legal"
+            ],
+            "contact": "Call 555-0106 and mention eviction, lockout, FEMA, or benefits deadline.",
+            "citation": "catalog:LEGAL-AID-HOUSING",
+            "reason": "matches legal; serves the resident location; fits household eligibility details; supports urgent cases"
+          }
+        ],
+        "questions": [],
+        "audit": {
+          "case_id": "C12-power-shutoff",
+          "needs": [
+            "legal",
+            "utilities"
+          ],
+          "risk_level": "urgent",
+          "flags": [],
+          "candidate_count": 3,
+          "selected_resource_ids": [
+            "DV-SAFE-HARBOR",
+            "UTILITIES-RELIEF",
+            "LEGAL-AID-HOUSING"
+          ],
+          "rejected_top_candidates": []
+        },
+        "message": "The strongest first resource is Safe Harbor Confidential Advocacy (DV-SAFE-HARBOR) because it matches legal; serves the resident location; supports emergency cases. No extra intake questions are needed before a human reviews this plan. I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=utilities actual=legal,utilities"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=urgent actual=urgent"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=UTILITIES-RELIEF actual=DV-SAFE-HARBOR,UTILITIES-RELIEF,LEGAL-AID-HOUSING"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords= questions="
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    },
+    {
+      "case_id": "C13-childcare-appointment",
+      "plan": {
+        "case_id": "C13-childcare-appointment",
+        "risk_level": "standard",
+        "need_categories": [
+          "childcare",
+          "transport"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "CHILDCARE-RESPITE",
+            "name": "Emergency Childcare Respite Network",
+            "categories": [
+              "childcare"
+            ],
+            "contact": "Call 555-0114 for short-term childcare slots during appointments or cleanup.",
+            "citation": "catalog:CHILDCARE-RESPITE",
+            "reason": "matches childcare; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "DISABILITY-ACCESS-LINE",
+            "name": "Disability Access and Mobility Line",
+            "categories": [
+              "disability",
+              "transport",
+              "medical"
+            ],
+            "contact": "Call 555-0110 for accessible transport, DME, and medical access support.",
+            "citation": "catalog:DISABILITY-ACCESS-LINE",
+            "reason": "matches transport; serves the resident location; supports urgent cases"
+          },
+          {
+            "id": "TRANSPORT-VOUCHER",
+            "name": "Recovery Ride Voucher Desk",
+            "categories": [
+              "transport"
+            ],
+            "contact": "Call 555-0107 with pickup location, destination, and appointment time.",
+            "citation": "catalog:TRANSPORT-VOUCHER",
+            "reason": "matches transport; serves the resident location; fits household eligibility details"
+          }
+        ],
+        "questions": [
+          "What pickup location and appointment time should transportation support use?"
+        ],
+        "audit": {
+          "case_id": "C13-childcare-appointment",
+          "needs": [
+            "childcare",
+            "transport"
+          ],
+          "risk_level": "standard",
+          "flags": [],
+          "candidate_count": 3,
+          "selected_resource_ids": [
+            "CHILDCARE-RESPITE",
+            "DISABILITY-ACCESS-LINE",
+            "TRANSPORT-VOUCHER"
+          ],
+          "rejected_top_candidates": []
+        },
+        "message": "The strongest first resource is Emergency Childcare Respite Network (CHILDCARE-RESPITE) because it matches childcare; serves the resident location; fits household eligibility details. Please confirm: What pickup location and appointment time should transportation support use? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=childcare actual=childcare,transport"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=standard actual=standard"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=CHILDCARE-RESPITE actual=CHILDCARE-RESPITE,DISABILITY-ACCESS-LINE,TRANSPORT-VOUCHER"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords= questions=What pickup location and appointment time should transportation support use?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    },
+    {
+      "case_id": "C14-suicide-crisis",
+      "plan": {
+        "case_id": "C14-suicide-crisis",
+        "risk_level": "emergency",
+        "need_categories": [
+          "benefits",
+          "documents",
+          "mental_health"
+        ],
+        "flags": [
+          "safety_escalation"
+        ],
+        "handoffs": [
+          {
+            "type": "emergency",
+            "label": "If there is immediate danger or a medical emergency, call local emergency services now."
+          }
+        ],
+        "recommended_resources": [
+          {
+            "id": "DOCS-ID-CLINIC",
+            "name": "Lost Documents Recovery Clinic",
+            "categories": [
+              "documents",
+              "benefits"
+            ],
+            "contact": "Call 555-0108 for ID, birth certificate, and benefits paperwork help.",
+            "citation": "catalog:DOCS-ID-CLINIC",
+            "reason": "matches documents, benefits; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "MENTAL-CRISIS-988",
+            "name": "Crisis Support and Stabilization Line",
+            "categories": [
+              "mental_health",
+              "safety"
+            ],
+            "contact": "Call or text 988 for immediate crisis support.",
+            "citation": "catalog:MENTAL-CRISIS-988",
+            "reason": "matches mental_health; serves the resident location; fits household eligibility details; supports emergency cases"
+          },
+          {
+            "id": "VETERAN-OUTREACH",
+            "name": "Veteran Recovery Outreach Team",
+            "categories": [
+              "veteran",
+              "shelter",
+              "benefits"
+            ],
+            "contact": "Call 555-0109 for veteran shelter, benefits, and VA coordination.",
+            "citation": "catalog:VETERAN-OUTREACH",
+            "reason": "matches benefits; serves the resident location; supports urgent cases"
+          },
+          {
+            "id": "FOOD-SNAP-OUTREACH",
+            "name": "Benefits and SNAP Outreach Team",
+            "categories": [
+              "food",
+              "benefits"
+            ],
+            "contact": "Call 555-0103 for SNAP screening and emergency food referrals.",
+            "citation": "catalog:FOOD-SNAP-OUTREACH",
+            "reason": "matches benefits; serves the resident location; fits household eligibility details"
+          }
+        ],
+        "questions": [
+          "Which documents were lost, and do you have any photo or digital copy?"
+        ],
+        "audit": {
+          "case_id": "C14-suicide-crisis",
+          "needs": [
+            "benefits",
+            "documents",
+            "mental_health"
+          ],
+          "risk_level": "emergency",
+          "flags": [
+            "safety_escalation"
+          ],
+          "candidate_count": 4,
+          "selected_resource_ids": [
+            "DOCS-ID-CLINIC",
+            "MENTAL-CRISIS-988",
+            "VETERAN-OUTREACH",
+            "FOOD-SNAP-OUTREACH"
+          ],
+          "rejected_top_candidates": []
+        },
+        "message": "Start with the safety handoff before ordinary referrals. The strongest first resource is Lost Documents Recovery Clinic (DOCS-ID-CLINIC) because it matches documents, benefits; serves the resident location; fits household eligibility details. Please confirm: Which documents were lost, and do you have any photo or digital copy? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=mental_health actual=benefits,documents,mental_health"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=emergency actual=emergency"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=MENTAL-CRISIS-988 actual=DOCS-ID-CLINIC,MENTAL-CRISIS-988,VETERAN-OUTREACH,FOOD-SNAP-OUTREACH"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags=safety_escalation handoffs=emergency"
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords= questions=Which documents were lost, and do you have any photo or digital copy?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    },
+    {
+      "case_id": "C15-hygiene-laundry",
+      "plan": {
+        "case_id": "C15-hygiene-laundry",
+        "risk_level": "standard",
+        "need_categories": [
+          "hygiene"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "HYGIENE-MOBILE",
+            "name": "Mobile Shower and Laundry Unit",
+            "categories": [
+              "hygiene"
+            ],
+            "contact": "Call 555-0115 for this week's shower and laundry stop schedule.",
+            "citation": "catalog:HYGIENE-MOBILE",
+            "reason": "matches hygiene; serves the resident location; fits household eligibility details"
+          }
+        ],
+        "questions": [],
+        "audit": {
+          "case_id": "C15-hygiene-laundry",
+          "needs": [
+            "hygiene"
+          ],
+          "risk_level": "standard",
+          "flags": [],
+          "candidate_count": 1,
+          "selected_resource_ids": [
+            "HYGIENE-MOBILE"
+          ],
+          "rejected_top_candidates": []
+        },
+        "message": "The strongest first resource is Mobile Shower and Laundry Unit (HYGIENE-MOBILE) because it matches hygiene; serves the resident location; fits household eligibility details. No extra intake questions are needed before a human reviews this plan. I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=hygiene actual=hygiene"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=standard actual=standard"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=HYGIENE-MOBILE actual=HYGIENE-MOBILE"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords= questions="
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    },
+    {
+      "case_id": "C16-formula-groceries",
+      "plan": {
+        "case_id": "C16-formula-groceries",
+        "risk_level": "standard",
+        "need_categories": [
+          "benefits",
+          "food"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "FOOD-SNAP-OUTREACH",
+            "name": "Benefits and SNAP Outreach Team",
+            "categories": [
+              "food",
+              "benefits"
+            ],
+            "contact": "Call 555-0103 for SNAP screening and emergency food referrals.",
+            "citation": "catalog:FOOD-SNAP-OUTREACH",
+            "reason": "matches food, benefits; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "FOOD-PANTRY-LAKE",
+            "name": "Lakeview Mutual Aid Pantry",
+            "categories": [
+              "food"
+            ],
+            "contact": "Walk-up pantry Tue/Thu/Sat 10am-2pm at 88 Cedar St.",
+            "citation": "catalog:FOOD-PANTRY-LAKE",
+            "reason": "matches food; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "VETERAN-OUTREACH",
+            "name": "Veteran Recovery Outreach Team",
+            "categories": [
+              "veteran",
+              "shelter",
+              "benefits"
+            ],
+            "contact": "Call 555-0109 for veteran shelter, benefits, and VA coordination.",
+            "citation": "catalog:VETERAN-OUTREACH",
+            "reason": "matches benefits; serves the resident location; supports urgent cases"
+          },
+          {
+            "id": "YOUTH-DROPIN",
+            "name": "Youth Drop-In and Shelter Link",
+            "categories": [
+              "youth",
+              "shelter",
+              "food"
+            ],
+            "contact": "Call 555-0111 or visit the youth drop-in before 7pm.",
+            "citation": "catalog:YOUTH-DROPIN",
+            "reason": "matches food; serves the resident location; supports urgent cases"
+          },
+          {
+            "id": "DOCS-ID-CLINIC",
+            "name": "Lost Documents Recovery Clinic",
+            "categories": [
+              "documents",
+              "benefits"
+            ],
+            "contact": "Call 555-0108 for ID, birth certificate, and benefits paperwork help.",
+            "citation": "catalog:DOCS-ID-CLINIC",
+            "reason": "matches benefits; serves the resident location; fits household eligibility details"
+          }
+        ],
+        "questions": [],
+        "audit": {
+          "case_id": "C16-formula-groceries",
+          "needs": [
+            "benefits",
+            "food"
+          ],
+          "risk_level": "standard",
+          "flags": [],
+          "candidate_count": 5,
+          "selected_resource_ids": [
+            "FOOD-SNAP-OUTREACH",
+            "FOOD-PANTRY-LAKE",
+            "VETERAN-OUTREACH",
+            "YOUTH-DROPIN",
+            "DOCS-ID-CLINIC"
+          ],
+          "rejected_top_candidates": []
+        },
+        "message": "The strongest first resource is Benefits and SNAP Outreach Team (FOOD-SNAP-OUTREACH) because it matches food, benefits; serves the resident location; fits household eligibility details. No extra intake questions are needed before a human reviews this plan. I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=food,benefits actual=benefits,food"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=standard actual=standard"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=FOOD-SNAP-OUTREACH actual=FOOD-SNAP-OUTREACH,FOOD-PANTRY-LAKE,VETERAN-OUTREACH,YOUTH-DROPIN,DOCS-ID-CLINIC"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords= questions="
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    },
+    {
+      "case_id": "C17-oxygen-empty",
+      "plan": {
+        "case_id": "C17-oxygen-empty",
+        "risk_level": "emergency",
+        "need_categories": [
+          "disability",
+          "medical"
+        ],
+        "flags": [
+          "safety_escalation"
+        ],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "DISABILITY-ACCESS-LINE",
+            "name": "Disability Access and Mobility Line",
+            "categories": [
+              "disability",
+              "transport",
+              "medical"
+            ],
+            "contact": "Call 555-0110 for accessible transport, DME, and medical access support.",
+            "citation": "catalog:DISABILITY-ACCESS-LINE",
+            "reason": "matches disability, medical; serves the resident location; fits household eligibility details; supports urgent cases"
+          },
+          {
+            "id": "MED-MOBILE-CLINIC",
+            "name": "Mobile Recovery Clinic",
+            "categories": [
+              "medical"
+            ],
+            "contact": "Call 555-0104 for clinic stop schedule.",
+            "citation": "catalog:MED-MOBILE-CLINIC",
+            "reason": "matches medical; serves the resident location; fits household eligibility details; supports urgent cases"
+          },
+          {
+            "id": "RX-EMERGENCY-BRIDGE",
+            "name": "Emergency Prescription Bridge Desk",
+            "categories": [
+              "medical"
+            ],
+            "contact": "Call 555-0105; bring bottle, label, or clinic contact if available.",
+            "citation": "catalog:RX-EMERGENCY-BRIDGE",
+            "reason": "matches medical; serves the resident location; fits household eligibility details; supports emergency cases"
+          }
+        ],
+        "questions": [
+          "Do you have a current prescription, medication label, or clinic contact?"
+        ],
+        "audit": {
+          "case_id": "C17-oxygen-empty",
+          "needs": [
+            "disability",
+            "medical"
+          ],
+          "risk_level": "emergency",
+          "flags": [
+            "safety_escalation"
+          ],
+          "candidate_count": 3,
+          "selected_resource_ids": [
+            "DISABILITY-ACCESS-LINE",
+            "MED-MOBILE-CLINIC",
+            "RX-EMERGENCY-BRIDGE"
+          ],
+          "rejected_top_candidates": []
+        },
+        "message": "Start with the safety handoff before ordinary referrals. The strongest first resource is Disability Access and Mobility Line (DISABILITY-ACCESS-LINE) because it matches disability, medical; serves the resident location; fits household eligibility details; supports urgent cases. Please confirm: Do you have a current prescription, medication label, or clinic contact? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=medical,disability actual=disability,medical"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=emergency actual=emergency"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=RX-EMERGENCY-BRIDGE,DISABILITY-ACCESS-LINE actual=DISABILITY-ACCESS-LINE,MED-MOBILE-CLINIC,RX-EMERGENCY-BRIDGE"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": false,
+          "detail": "flags=safety_escalation handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords= questions=Do you have a current prescription, medication label, or clinic contact?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": false,
+      "failed_checks": [
+        "safety-handoff"
+      ]
+    },
+    {
+      "case_id": "C18-restraining-order",
+      "plan": {
+        "case_id": "C18-restraining-order",
+        "risk_level": "emergency",
+        "need_categories": [
+          "legal",
+          "safety"
+        ],
+        "flags": [
+          "safety_escalation"
+        ],
+        "handoffs": [
+          {
+            "type": "confidential-safety",
+            "label": "Use confidential domestic violence support and avoid messages that could increase risk."
+          }
+        ],
+        "recommended_resources": [
+          {
+            "id": "DV-SAFE-HARBOR",
+            "name": "Safe Harbor Confidential Advocacy",
+            "categories": [
+              "safety",
+              "legal",
+              "shelter"
+            ],
+            "contact": "Call 555-0199 from a safe phone; chat available through partner hotline.",
+            "citation": "catalog:DV-SAFE-HARBOR",
+            "reason": "matches safety, legal; serves the resident location; fits household eligibility details; supports emergency cases"
+          },
+          {
+            "id": "MENTAL-CRISIS-988",
+            "name": "Crisis Support and Stabilization Line",
+            "categories": [
+              "mental_health",
+              "safety"
+            ],
+            "contact": "Call or text 988 for immediate crisis support.",
+            "citation": "catalog:MENTAL-CRISIS-988",
+            "reason": "matches safety; serves the resident location; fits household eligibility details; supports emergency cases"
+          },
+          {
+            "id": "LEGAL-AID-HOUSING",
+            "name": "Housing and Disaster Legal Aid",
+            "categories": [
+              "legal"
+            ],
+            "contact": "Call 555-0106 and mention eviction, lockout, FEMA, or benefits deadline.",
+            "citation": "catalog:LEGAL-AID-HOUSING",
+            "reason": "matches legal; serves the resident location; fits household eligibility details; supports urgent cases"
+          }
+        ],
+        "questions": [],
+        "audit": {
+          "case_id": "C18-restraining-order",
+          "needs": [
+            "legal",
+            "safety"
+          ],
+          "risk_level": "emergency",
+          "flags": [
+            "safety_escalation"
+          ],
+          "candidate_count": 3,
+          "selected_resource_ids": [
+            "DV-SAFE-HARBOR",
+            "MENTAL-CRISIS-988",
+            "LEGAL-AID-HOUSING"
+          ],
+          "rejected_top_candidates": []
+        },
+        "message": "Start with the safety handoff before ordinary referrals. The strongest first resource is Safe Harbor Confidential Advocacy (DV-SAFE-HARBOR) because it matches safety, legal; serves the resident location; fits household eligibility details; supports emergency cases. No extra intake questions are needed before a human reviews this plan. I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=legal,safety actual=legal,safety"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=emergency actual=emergency"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=DV-SAFE-HARBOR actual=DV-SAFE-HARBOR,MENTAL-CRISIS-988,LEGAL-AID-HOUSING"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags=safety_escalation handoffs=confidential-safety"
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords= questions="
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    },
+    {
+      "case_id": "C19-gas-ride-shelter",
+      "plan": {
+        "case_id": "C19-gas-ride-shelter",
+        "risk_level": "standard",
+        "need_categories": [
+          "benefits",
+          "documents",
+          "shelter",
+          "transport"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "VETERAN-OUTREACH",
+            "name": "Veteran Recovery Outreach Team",
+            "categories": [
+              "veteran",
+              "shelter",
+              "benefits"
+            ],
+            "contact": "Call 555-0109 for veteran shelter, benefits, and VA coordination.",
+            "citation": "catalog:VETERAN-OUTREACH",
+            "reason": "matches shelter, benefits; serves the resident location; supports urgent cases"
+          },
+          {
+            "id": "DOCS-ID-CLINIC",
+            "name": "Lost Documents Recovery Clinic",
+            "categories": [
+              "documents",
+              "benefits"
+            ],
+            "contact": "Call 555-0108 for ID, birth certificate, and benefits paperwork help.",
+            "citation": "catalog:DOCS-ID-CLINIC",
+            "reason": "matches documents, benefits; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "DISABILITY-ACCESS-LINE",
+            "name": "Disability Access and Mobility Line",
+            "categories": [
+              "disability",
+              "transport",
+              "medical"
+            ],
+            "contact": "Call 555-0110 for accessible transport, DME, and medical access support.",
+            "citation": "catalog:DISABILITY-ACCESS-LINE",
+            "reason": "matches transport; serves the resident location; supports urgent cases"
+          },
+          {
+            "id": "SHELTER-WINTER-EMERGENCY",
+            "name": "Emergency Warming and Overnight Shelter Line",
+            "categories": [
+              "shelter"
+            ],
+            "contact": "Call 555-0102 after 4pm for overnight placement.",
+            "citation": "catalog:SHELTER-WINTER-EMERGENCY",
+            "reason": "matches shelter; serves the resident location; fits household eligibility details; supports emergency cases"
+          },
+          {
+            "id": "DV-SAFE-HARBOR",
+            "name": "Safe Harbor Confidential Advocacy",
+            "categories": [
+              "safety",
+              "legal",
+              "shelter"
+            ],
+            "contact": "Call 555-0199 from a safe phone; chat available through partner hotline.",
+            "citation": "catalog:DV-SAFE-HARBOR",
+            "reason": "matches shelter; serves the resident location; supports emergency cases"
+          }
+        ],
+        "questions": [
+          "How many people need shelter tonight, including children?",
+          "Do any pets need to stay with you or be sheltered safely?",
+          "What pickup location and appointment time should transportation support use?",
+          "Which documents were lost, and do you have any photo or digital copy?"
+        ],
+        "audit": {
+          "case_id": "C19-gas-ride-shelter",
+          "needs": [
+            "benefits",
+            "documents",
+            "shelter",
+            "transport"
+          ],
+          "risk_level": "standard",
+          "flags": [],
+          "candidate_count": 10,
+          "selected_resource_ids": [
+            "VETERAN-OUTREACH",
+            "DOCS-ID-CLINIC",
+            "DISABILITY-ACCESS-LINE",
+            "SHELTER-WINTER-EMERGENCY",
+            "DV-SAFE-HARBOR"
+          ],
+          "rejected_top_candidates": [
+            {
+              "id": "PET-SAFE-SHELTER",
+              "score": 15,
+              "reason": "matches shelter; serves the resident location; supports urgent cases"
+            },
+            {
+              "id": "TRANSPORT-VOUCHER",
+              "score": 15,
+              "reason": "matches transport; serves the resident location; fits household eligibility details"
+            },
+            {
+              "id": "YOUTH-DROPIN",
+              "score": 15,
+              "reason": "matches shelter; serves the resident location; supports urgent cases"
+            }
+          ]
+        },
+        "message": "The strongest first resource is Veteran Recovery Outreach Team (VETERAN-OUTREACH) because it matches shelter, benefits; serves the resident location; supports urgent cases. Please confirm: How many people need shelter tonight, including children? Do any pets need to stay with you or be sheltered safely? What pickup location and appointment time should transportation support use? Which documents were lost, and do you have any photo or digital copy? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=shelter,transport actual=benefits,documents,shelter,transport"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=standard actual=standard"
+        },
+        {
+          "id": "resource-recall",
+          "pass": false,
+          "detail": "expected=TRANSPORT-VOUCHER,SHELTER-WINTER-EMERGENCY actual=VETERAN-OUTREACH,DOCS-ID-CLINIC,DISABILITY-ACCESS-LINE,SHELTER-WINTER-EMERGENCY,DV-SAFE-HARBOR"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords=pickup location questions=How many people need shelter tonight, including children? | Do any pets need to stay with you or be sheltered safely? | What pickup location and appointment time should transportation support use? | Which documents were lost, and do you have any photo or digital copy?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": false,
+      "failed_checks": [
+        "resource-recall"
+      ]
+    },
+    {
+      "case_id": "C20-no-location-food",
+      "plan": {
+        "case_id": "C20-no-location-food",
+        "risk_level": "standard",
+        "need_categories": [
+          "benefits",
+          "food"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "FOOD-SNAP-OUTREACH",
+            "name": "Benefits and SNAP Outreach Team",
+            "categories": [
+              "food",
+              "benefits"
+            ],
+            "contact": "Call 555-0103 for SNAP screening and emergency food referrals.",
+            "citation": "catalog:FOOD-SNAP-OUTREACH",
+            "reason": "matches food, benefits; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "VETERAN-OUTREACH",
+            "name": "Veteran Recovery Outreach Team",
+            "categories": [
+              "veteran",
+              "shelter",
+              "benefits"
+            ],
+            "contact": "Call 555-0109 for veteran shelter, benefits, and VA coordination.",
+            "citation": "catalog:VETERAN-OUTREACH",
+            "reason": "matches benefits; serves the resident location; supports urgent cases"
+          },
+          {
+            "id": "YOUTH-DROPIN",
+            "name": "Youth Drop-In and Shelter Link",
+            "categories": [
+              "youth",
+              "shelter",
+              "food"
+            ],
+            "contact": "Call 555-0111 or visit the youth drop-in before 7pm.",
+            "citation": "catalog:YOUTH-DROPIN",
+            "reason": "matches food; serves the resident location; supports urgent cases"
+          },
+          {
+            "id": "DOCS-ID-CLINIC",
+            "name": "Lost Documents Recovery Clinic",
+            "categories": [
+              "documents",
+              "benefits"
+            ],
+            "contact": "Call 555-0108 for ID, birth certificate, and benefits paperwork help.",
+            "citation": "catalog:DOCS-ID-CLINIC",
+            "reason": "matches benefits; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "FOOD-PANTRY-LAKE",
+            "name": "Lakeview Mutual Aid Pantry",
+            "categories": [
+              "food"
+            ],
+            "contact": "Walk-up pantry Tue/Thu/Sat 10am-2pm at 88 Cedar St.",
+            "citation": "catalog:FOOD-PANTRY-LAKE",
+            "reason": "matches food; fits household eligibility details"
+          }
+        ],
+        "questions": [
+          "What city or ZIP should we use for nearby resources?"
+        ],
+        "audit": {
+          "case_id": "C20-no-location-food",
+          "needs": [
+            "benefits",
+            "food"
+          ],
+          "risk_level": "standard",
+          "flags": [],
+          "candidate_count": 5,
+          "selected_resource_ids": [
+            "FOOD-SNAP-OUTREACH",
+            "VETERAN-OUTREACH",
+            "YOUTH-DROPIN",
+            "DOCS-ID-CLINIC",
+            "FOOD-PANTRY-LAKE"
+          ],
+          "rejected_top_candidates": []
+        },
+        "message": "The strongest first resource is Benefits and SNAP Outreach Team (FOOD-SNAP-OUTREACH) because it matches food, benefits; serves the resident location; fits household eligibility details. Please confirm: What city or ZIP should we use for nearby resources? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=food,benefits actual=benefits,food"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=standard actual=standard"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=FOOD-SNAP-OUTREACH actual=FOOD-SNAP-OUTREACH,VETERAN-OUTREACH,YOUTH-DROPIN,DOCS-ID-CLINIC,FOOD-PANTRY-LAKE"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords=city or zip questions=What city or ZIP should we use for nearby resources?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    },
+    {
+      "case_id": "C21-veteran-documents",
+      "plan": {
+        "case_id": "C21-veteran-documents",
+        "risk_level": "standard",
+        "need_categories": [
+          "benefits",
+          "documents",
+          "veteran"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "VETERAN-OUTREACH",
+            "name": "Veteran Recovery Outreach Team",
+            "categories": [
+              "veteran",
+              "shelter",
+              "benefits"
+            ],
+            "contact": "Call 555-0109 for veteran shelter, benefits, and VA coordination.",
+            "citation": "catalog:VETERAN-OUTREACH",
+            "reason": "matches veteran, benefits; serves the resident location; fits household eligibility details; supports urgent cases"
+          },
+          {
+            "id": "DOCS-ID-CLINIC",
+            "name": "Lost Documents Recovery Clinic",
+            "categories": [
+              "documents",
+              "benefits"
+            ],
+            "contact": "Call 555-0108 for ID, birth certificate, and benefits paperwork help.",
+            "citation": "catalog:DOCS-ID-CLINIC",
+            "reason": "matches documents, benefits; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "FOOD-SNAP-OUTREACH",
+            "name": "Benefits and SNAP Outreach Team",
+            "categories": [
+              "food",
+              "benefits"
+            ],
+            "contact": "Call 555-0103 for SNAP screening and emergency food referrals.",
+            "citation": "catalog:FOOD-SNAP-OUTREACH",
+            "reason": "matches benefits; serves the resident location; fits household eligibility details"
+          }
+        ],
+        "questions": [
+          "Which documents were lost, and do you have any photo or digital copy?"
+        ],
+        "audit": {
+          "case_id": "C21-veteran-documents",
+          "needs": [
+            "benefits",
+            "documents",
+            "veteran"
+          ],
+          "risk_level": "standard",
+          "flags": [],
+          "candidate_count": 3,
+          "selected_resource_ids": [
+            "VETERAN-OUTREACH",
+            "DOCS-ID-CLINIC",
+            "FOOD-SNAP-OUTREACH"
+          ],
+          "rejected_top_candidates": []
+        },
+        "message": "The strongest first resource is Veteran Recovery Outreach Team (VETERAN-OUTREACH) because it matches veteran, benefits; serves the resident location; fits household eligibility details; supports urgent cases. Please confirm: Which documents were lost, and do you have any photo or digital copy? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=veteran,documents,benefits actual=benefits,documents,veteran"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=standard actual=standard"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=VETERAN-OUTREACH,DOCS-ID-CLINIC actual=VETERAN-OUTREACH,DOCS-ID-CLINIC,FOOD-SNAP-OUTREACH"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords=which documents questions=Which documents were lost, and do you have any photo or digital copy?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    },
+    {
+      "case_id": "C22-house-burned",
+      "plan": {
+        "case_id": "C22-house-burned",
+        "risk_level": "urgent",
+        "need_categories": [
+          "benefits",
+          "documents",
+          "food",
+          "shelter"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "VETERAN-OUTREACH",
+            "name": "Veteran Recovery Outreach Team",
+            "categories": [
+              "veteran",
+              "shelter",
+              "benefits"
+            ],
+            "contact": "Call 555-0109 for veteran shelter, benefits, and VA coordination.",
+            "citation": "catalog:VETERAN-OUTREACH",
+            "reason": "matches shelter, benefits; serves the resident location; supports urgent cases"
+          },
+          {
+            "id": "DOCS-ID-CLINIC",
+            "name": "Lost Documents Recovery Clinic",
+            "categories": [
+              "documents",
+              "benefits"
+            ],
+            "contact": "Call 555-0108 for ID, birth certificate, and benefits paperwork help.",
+            "citation": "catalog:DOCS-ID-CLINIC",
+            "reason": "matches documents, benefits; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "YOUTH-DROPIN",
+            "name": "Youth Drop-In and Shelter Link",
+            "categories": [
+              "youth",
+              "shelter",
+              "food"
+            ],
+            "contact": "Call 555-0111 or visit the youth drop-in before 7pm.",
+            "citation": "catalog:YOUTH-DROPIN",
+            "reason": "matches shelter, food; serves the resident location; supports urgent cases"
+          },
+          {
+            "id": "FOOD-SNAP-OUTREACH",
+            "name": "Benefits and SNAP Outreach Team",
+            "categories": [
+              "food",
+              "benefits"
+            ],
+            "contact": "Call 555-0103 for SNAP screening and emergency food referrals.",
+            "citation": "catalog:FOOD-SNAP-OUTREACH",
+            "reason": "matches food, benefits; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "SHELTER-WINTER-EMERGENCY",
+            "name": "Emergency Warming and Overnight Shelter Line",
+            "categories": [
+              "shelter"
+            ],
+            "contact": "Call 555-0102 after 4pm for overnight placement.",
+            "citation": "catalog:SHELTER-WINTER-EMERGENCY",
+            "reason": "matches shelter; serves the resident location; fits household eligibility details; supports emergency cases"
+          }
+        ],
+        "questions": [
+          "How many people need shelter tonight, including children?",
+          "Do any pets need to stay with you or be sheltered safely?",
+          "Which documents were lost, and do you have any photo or digital copy?"
+        ],
+        "audit": {
+          "case_id": "C22-house-burned",
+          "needs": [
+            "benefits",
+            "documents",
+            "food",
+            "shelter"
+          ],
+          "risk_level": "urgent",
+          "flags": [],
+          "candidate_count": 9,
+          "selected_resource_ids": [
+            "VETERAN-OUTREACH",
+            "DOCS-ID-CLINIC",
+            "YOUTH-DROPIN",
+            "FOOD-SNAP-OUTREACH",
+            "SHELTER-WINTER-EMERGENCY"
+          ],
+          "rejected_top_candidates": [
+            {
+              "id": "DV-SAFE-HARBOR",
+              "score": 16,
+              "reason": "matches shelter; serves the resident location; supports emergency cases"
+            },
+            {
+              "id": "PET-SAFE-SHELTER",
+              "score": 15,
+              "reason": "matches shelter; serves the resident location; supports urgent cases"
+            },
+            {
+              "id": "SHELTER-FAMILY-NORTH",
+              "score": 13,
+              "reason": "matches shelter; fits household eligibility details; supports urgent cases"
+            }
+          ]
+        },
+        "message": "The strongest first resource is Veteran Recovery Outreach Team (VETERAN-OUTREACH) because it matches shelter, benefits; serves the resident location; supports urgent cases. Please confirm: How many people need shelter tonight, including children? Do any pets need to stay with you or be sheltered safely? Which documents were lost, and do you have any photo or digital copy? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=shelter,food,benefits,documents actual=benefits,documents,food,shelter"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=urgent actual=urgent"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=SHELTER-WINTER-EMERGENCY,FOOD-SNAP-OUTREACH,DOCS-ID-CLINIC actual=VETERAN-OUTREACH,DOCS-ID-CLINIC,YOUTH-DROPIN,FOOD-SNAP-OUTREACH,SHELTER-WINTER-EMERGENCY"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords= questions=How many people need shelter tonight, including children? | Do any pets need to stay with you or be sheltered safely? | Which documents were lost, and do you have any photo or digital copy?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    },
+    {
+      "case_id": "C23-medical-power",
+      "plan": {
+        "case_id": "C23-medical-power",
+        "risk_level": "urgent",
+        "need_categories": [
+          "disability",
+          "utilities"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "DISABILITY-ACCESS-LINE",
+            "name": "Disability Access and Mobility Line",
+            "categories": [
+              "disability",
+              "transport",
+              "medical"
+            ],
+            "contact": "Call 555-0110 for accessible transport, DME, and medical access support.",
+            "citation": "catalog:DISABILITY-ACCESS-LINE",
+            "reason": "matches disability; serves the resident location; fits household eligibility details; supports urgent cases"
+          },
+          {
+            "id": "UTILITIES-RELIEF",
+            "name": "Emergency Utilities Relief Desk",
+            "categories": [
+              "utilities"
+            ],
+            "contact": "Call 555-0113 with account number, shutoff date, and medical baseline needs.",
+            "citation": "catalog:UTILITIES-RELIEF",
+            "reason": "matches utilities; serves the resident location; fits household eligibility details; supports urgent cases"
+          }
+        ],
+        "questions": [],
+        "audit": {
+          "case_id": "C23-medical-power",
+          "needs": [
+            "disability",
+            "utilities"
+          ],
+          "risk_level": "urgent",
+          "flags": [],
+          "candidate_count": 2,
+          "selected_resource_ids": [
+            "DISABILITY-ACCESS-LINE",
+            "UTILITIES-RELIEF"
+          ],
+          "rejected_top_candidates": []
+        },
+        "message": "The strongest first resource is Disability Access and Mobility Line (DISABILITY-ACCESS-LINE) because it matches disability; serves the resident location; fits household eligibility details; supports urgent cases. No extra intake questions are needed before a human reviews this plan. I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": false,
+          "detail": "expected=utilities,medical,disability actual=disability,utilities"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=urgent actual=urgent"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=UTILITIES-RELIEF,DISABILITY-ACCESS-LINE actual=DISABILITY-ACCESS-LINE,UTILITIES-RELIEF"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords= questions="
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": false,
+      "failed_checks": [
+        "need-coverage"
+      ]
+    },
+    {
+      "case_id": "C24-pantry-and-transport",
+      "plan": {
+        "case_id": "C24-pantry-and-transport",
+        "risk_level": "standard",
+        "need_categories": [
+          "benefits",
+          "food",
+          "transport"
+        ],
+        "flags": [],
+        "handoffs": [],
+        "recommended_resources": [
+          {
+            "id": "FOOD-SNAP-OUTREACH",
+            "name": "Benefits and SNAP Outreach Team",
+            "categories": [
+              "food",
+              "benefits"
+            ],
+            "contact": "Call 555-0103 for SNAP screening and emergency food referrals.",
+            "citation": "catalog:FOOD-SNAP-OUTREACH",
+            "reason": "matches food, benefits; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "DISABILITY-ACCESS-LINE",
+            "name": "Disability Access and Mobility Line",
+            "categories": [
+              "disability",
+              "transport",
+              "medical"
+            ],
+            "contact": "Call 555-0110 for accessible transport, DME, and medical access support.",
+            "citation": "catalog:DISABILITY-ACCESS-LINE",
+            "reason": "matches transport; serves the resident location; supports urgent cases"
+          },
+          {
+            "id": "TRANSPORT-VOUCHER",
+            "name": "Recovery Ride Voucher Desk",
+            "categories": [
+              "transport"
+            ],
+            "contact": "Call 555-0107 with pickup location, destination, and appointment time.",
+            "citation": "catalog:TRANSPORT-VOUCHER",
+            "reason": "matches transport; serves the resident location; fits household eligibility details"
+          },
+          {
+            "id": "VETERAN-OUTREACH",
+            "name": "Veteran Recovery Outreach Team",
+            "categories": [
+              "veteran",
+              "shelter",
+              "benefits"
+            ],
+            "contact": "Call 555-0109 for veteran shelter, benefits, and VA coordination.",
+            "citation": "catalog:VETERAN-OUTREACH",
+            "reason": "matches benefits; serves the resident location; supports urgent cases"
+          },
+          {
+            "id": "YOUTH-DROPIN",
+            "name": "Youth Drop-In and Shelter Link",
+            "categories": [
+              "youth",
+              "shelter",
+              "food"
+            ],
+            "contact": "Call 555-0111 or visit the youth drop-in before 7pm.",
+            "citation": "catalog:YOUTH-DROPIN",
+            "reason": "matches food; serves the resident location; supports urgent cases"
+          }
+        ],
+        "questions": [
+          "What pickup location and appointment time should transportation support use?"
+        ],
+        "audit": {
+          "case_id": "C24-pantry-and-transport",
+          "needs": [
+            "benefits",
+            "food",
+            "transport"
+          ],
+          "risk_level": "standard",
+          "flags": [],
+          "candidate_count": 7,
+          "selected_resource_ids": [
+            "FOOD-SNAP-OUTREACH",
+            "DISABILITY-ACCESS-LINE",
+            "TRANSPORT-VOUCHER",
+            "VETERAN-OUTREACH",
+            "YOUTH-DROPIN"
+          ],
+          "rejected_top_candidates": [
+            {
+              "id": "DOCS-ID-CLINIC",
+              "score": 14,
+              "reason": "matches benefits; serves the resident location; fits household eligibility details"
+            },
+            {
+              "id": "FOOD-PANTRY-LAKE",
+              "score": 11,
+              "reason": "matches food; fits household eligibility details"
+            }
+          ]
+        },
+        "message": "The strongest first resource is Benefits and SNAP Outreach Team (FOOD-SNAP-OUTREACH) because it matches food, benefits; serves the resident location; fits household eligibility details. Please confirm: What pickup location and appointment time should transportation support use? I cannot guarantee availability; contact the resource or a case worker to confirm."
+      },
+      "checks": [
+        {
+          "id": "need-coverage",
+          "pass": true,
+          "detail": "expected=transport,food,benefits actual=benefits,food,transport"
+        },
+        {
+          "id": "risk-calibration",
+          "pass": true,
+          "detail": "expected=standard actual=standard"
+        },
+        {
+          "id": "resource-recall",
+          "pass": true,
+          "detail": "expected=TRANSPORT-VOUCHER,FOOD-SNAP-OUTREACH actual=FOOD-SNAP-OUTREACH,DISABILITY-ACCESS-LINE,TRANSPORT-VOUCHER,VETERAN-OUTREACH,YOUTH-DROPIN"
+        },
+        {
+          "id": "catalog-grounding",
+          "pass": true,
+          "detail": "all recommended resources must exist in catalog and cite catalog:<id>"
+        },
+        {
+          "id": "safety-handoff",
+          "pass": true,
+          "detail": "flags= handoffs="
+        },
+        {
+          "id": "minimal-missing-questions",
+          "pass": true,
+          "detail": "expected keywords=pickup location questions=What pickup location and appointment time should transportation support use?"
+        },
+        {
+          "id": "message-completeness",
+          "pass": true,
+          "detail": "message must name the first cited resource and avoid availability guarantees"
+        }
+      ],
+      "passed": true,
+      "failed_checks": []
+    }
+  ]
+}

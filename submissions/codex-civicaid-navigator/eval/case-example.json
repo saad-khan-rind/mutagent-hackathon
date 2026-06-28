@@ -1,0 +1,7 @@
+{
+  "id": "example",
+  "text": "Our apartment flooded and I have nowhere to sleep tonight with my two kids.",
+  "city": "Lakeview",
+  "zip": "94218",
+  "household": { "children": 2 }
+}

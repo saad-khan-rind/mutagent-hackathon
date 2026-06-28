@@ -1,0 +1,12 @@
+commands:
+  risk-drill:
+    route_target: mutagent-risk-drill
+    stage: "②.5 RISK-DRILL"
+    mode: batch
+    gated: false
+    visibility: shown
+    utterances:
+      - "risk drill"
+      - "stress the eval dataset"
+      - "check edge case coverage"
+      - "run pre-eval drill"

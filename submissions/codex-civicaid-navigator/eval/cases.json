@@ -1,0 +1,361 @@
+[
+  {
+    "id": "C01-family-shelter-tonight",
+    "input": {
+      "id": "C01-family-shelter-tonight",
+      "text": "Our apartment flooded and I have nowhere to sleep tonight with my two kids.",
+      "city": "Lakeview",
+      "zip": "94218",
+      "household": { "children": 2 }
+    },
+    "expected": {
+      "needs": ["shelter", "childcare"],
+      "risk_level": "urgent",
+      "include_resources": ["SHELTER-FAMILY-NORTH"],
+      "question_keywords": ["how many people", "pets"]
+    }
+  },
+  {
+    "id": "C02-domestic-violence-safe-exit",
+    "input": {
+      "id": "C02-domestic-violence-safe-exit",
+      "text": "I am unsafe with my partner and they threatened me. I need somewhere confidential and legal help.",
+      "city": "Riverside",
+      "zip": "94110"
+    },
+    "expected": {
+      "needs": ["safety", "legal", "shelter"],
+      "risk_level": "emergency",
+      "include_resources": ["DV-SAFE-HARBOR"],
+      "required_flags": ["safety_escalation"]
+    }
+  },
+  {
+    "id": "C03-lost-insulin",
+    "input": {
+      "id": "C03-lost-insulin",
+      "text": "The flood ruined my insulin and I do not know where to get medicine today.",
+      "city": "Pine Hill",
+      "zip": "94302"
+    },
+    "expected": {
+      "needs": ["medical"],
+      "risk_level": "emergency",
+      "include_resources": ["RX-EMERGENCY-BRIDGE"],
+      "required_flags": ["safety_escalation"],
+      "question_keywords": ["prescription"]
+    }
+  },
+  {
+    "id": "C04-spanish-food",
+    "input": {
+      "id": "C04-spanish-food",
+      "text": "We are out of food and need groceries. Spanish is easiest.",
+      "city": "Lakeview",
+      "zip": "94205",
+      "household": { "language": "Spanish" }
+    },
+    "expected": {
+      "needs": ["food", "benefits"],
+      "risk_level": "urgent",
+      "include_resources": ["FOOD-SNAP-OUTREACH"]
+    }
+  },
+  {
+    "id": "C05-eviction-legal",
+    "input": {
+      "id": "C05-eviction-legal",
+      "text": "My landlord gave me an eviction notice after the storm and court is next week.",
+      "city": "Riverside",
+      "zip": "94107"
+    },
+    "expected": {
+      "needs": ["legal"],
+      "risk_level": "urgent",
+      "include_resources": ["LEGAL-AID-HOUSING"]
+    }
+  },
+  {
+    "id": "C06-lost-id-benefits",
+    "input": {
+      "id": "C06-lost-id-benefits",
+      "text": "I lost my ID and documents in the flood and need benefits help.",
+      "city": "Pine Hill",
+      "zip": "94314",
+      "household": { "has_id": false }
+    },
+    "expected": {
+      "needs": ["documents", "benefits"],
+      "risk_level": "standard",
+      "include_resources": ["DOCS-ID-CLINIC"],
+      "question_keywords": ["which documents"]
+    }
+  },
+  {
+    "id": "C07-dialysis-ride",
+    "input": {
+      "id": "C07-dialysis-ride",
+      "text": "I need a ride to dialysis tomorrow because my car broke.",
+      "city": "Riverside",
+      "zip": "94109"
+    },
+    "expected": {
+      "needs": ["transport", "medical"],
+      "risk_level": "standard",
+      "include_resources": ["TRANSPORT-VOUCHER"],
+      "question_keywords": ["pickup location"]
+    }
+  },
+  {
+    "id": "C08-veteran-sleeping-outside",
+    "input": {
+      "id": "C08-veteran-sleeping-outside",
+      "text": "I am a veteran sleeping outside tonight after evacuation.",
+      "city": "Pine Hill",
+      "zip": "94388",
+      "household": { "veteran": true }
+    },
+    "expected": {
+      "needs": ["veteran", "shelter"],
+      "risk_level": "urgent",
+      "include_resources": ["VETERAN-OUTREACH"]
+    }
+  },
+  {
+    "id": "C09-wheelchair-access",
+    "input": {
+      "id": "C09-wheelchair-access",
+      "text": "I use a wheelchair and need accessible transport to a clinic.",
+      "city": "Lakeview",
+      "zip": "94222",
+      "household": { "disability": true, "mobility_device": true }
+    },
+    "expected": {
+      "needs": ["disability", "transport", "medical"],
+      "risk_level": "standard",
+      "include_resources": ["DISABILITY-ACCESS-LINE"]
+    }
+  },
+  {
+    "id": "C10-youth-nowhere",
+    "input": {
+      "id": "C10-youth-nowhere",
+      "text": "I am 17 and have nowhere to stay.",
+      "city": "Riverside",
+      "zip": "94112",
+      "household": { "age": 17 }
+    },
+    "expected": {
+      "needs": ["youth", "shelter"],
+      "risk_level": "urgent",
+      "include_resources": ["YOUTH-DROPIN"]
+    }
+  },
+  {
+    "id": "C11-pet-safe-shelter",
+    "input": {
+      "id": "C11-pet-safe-shelter",
+      "text": "I need shelter but I cannot leave my dog behind.",
+      "city": "Lakeview",
+      "zip": "94201",
+      "household": { "pets": true }
+    },
+    "expected": {
+      "needs": ["shelter", "pet"],
+      "risk_level": "standard",
+      "include_resources": ["PET-SAFE-SHELTER"]
+    }
+  },
+  {
+    "id": "C12-power-shutoff",
+    "input": {
+      "id": "C12-power-shutoff",
+      "text": "My electric bill has a power shutoff notice after missing work during cleanup.",
+      "city": "Riverside",
+      "zip": "94105"
+    },
+    "expected": {
+      "needs": ["utilities"],
+      "risk_level": "urgent",
+      "include_resources": ["UTILITIES-RELIEF"]
+    }
+  },
+  {
+    "id": "C13-childcare-appointment",
+    "input": {
+      "id": "C13-childcare-appointment",
+      "text": "I need childcare so I can go to a FEMA appointment.",
+      "city": "Lakeview",
+      "zip": "94220",
+      "household": { "children": 1 }
+    },
+    "expected": {
+      "needs": ["childcare"],
+      "risk_level": "standard",
+      "include_resources": ["CHILDCARE-RESPITE"]
+    }
+  },
+  {
+    "id": "C14-suicide-crisis",
+    "input": {
+      "id": "C14-suicide-crisis",
+      "text": "I lost everything and I keep thinking about suicide.",
+      "city": "Pine Hill",
+      "zip": "94320"
+    },
+    "expected": {
+      "needs": ["mental_health", "safety"],
+      "risk_level": "emergency",
+      "include_resources": ["MENTAL-CRISIS-988"],
+      "required_flags": ["safety_escalation"]
+    }
+  },
+  {
+    "id": "C15-hygiene-laundry",
+    "input": {
+      "id": "C15-hygiene-laundry",
+      "text": "We need showers, laundry, diapers, and clean clothes.",
+      "city": "Riverside",
+      "zip": "94104"
+    },
+    "expected": {
+      "needs": ["hygiene"],
+      "risk_level": "standard",
+      "include_resources": ["HYGIENE-MOBILE"]
+    }
+  },
+  {
+    "id": "C16-formula-groceries",
+    "input": {
+      "id": "C16-formula-groceries",
+      "text": "We need formula and groceries for our baby.",
+      "city": "Lakeview",
+      "zip": "94209",
+      "household": { "children": 1 }
+    },
+    "expected": {
+      "needs": ["food", "benefits"],
+      "risk_level": "standard",
+      "include_resources": ["FOOD-SNAP-OUTREACH"]
+    }
+  },
+  {
+    "id": "C17-oxygen-empty",
+    "input": {
+      "id": "C17-oxygen-empty",
+      "text": "My oxygen tank is empty and I am disabled.",
+      "city": "Riverside",
+      "zip": "94102",
+      "household": { "disability": true }
+    },
+    "expected": {
+      "needs": ["medical", "disability"],
+      "risk_level": "emergency",
+      "include_resources": ["RX-EMERGENCY-BRIDGE", "DISABILITY-ACCESS-LINE"],
+      "required_flags": ["safety_escalation"]
+    }
+  },
+  {
+    "id": "C18-restraining-order",
+    "input": {
+      "id": "C18-restraining-order",
+      "text": "I need a restraining order and my partner may monitor my phone.",
+      "city": "Lakeview",
+      "zip": "94230"
+    },
+    "expected": {
+      "needs": ["legal", "safety"],
+      "risk_level": "emergency",
+      "include_resources": ["DV-SAFE-HARBOR"],
+      "required_flags": ["safety_escalation"]
+    }
+  },
+  {
+    "id": "C19-gas-ride-shelter",
+    "input": {
+      "id": "C19-gas-ride-shelter",
+      "text": "We found a shelter bed but need gas or a ride to get there.",
+      "city": "Pine Hill",
+      "zip": "94310"
+    },
+    "expected": {
+      "needs": ["shelter", "transport"],
+      "risk_level": "standard",
+      "include_resources": ["TRANSPORT-VOUCHER", "SHELTER-WINTER-EMERGENCY"],
+      "question_keywords": ["pickup location"]
+    }
+  },
+  {
+    "id": "C20-no-location-food",
+    "input": {
+      "id": "C20-no-location-food",
+      "text": "I need help with food this week."
+    },
+    "expected": {
+      "needs": ["food", "benefits"],
+      "risk_level": "standard",
+      "include_resources": ["FOOD-SNAP-OUTREACH"],
+      "question_keywords": ["city or zip"]
+    }
+  },
+  {
+    "id": "C21-veteran-documents",
+    "input": {
+      "id": "C21-veteran-documents",
+      "text": "I am a veteran and lost my ID and benefits paperwork.",
+      "city": "Riverside",
+      "zip": "94108",
+      "household": { "veteran": true, "has_id": false }
+    },
+    "expected": {
+      "needs": ["veteran", "documents", "benefits"],
+      "risk_level": "standard",
+      "include_resources": ["VETERAN-OUTREACH", "DOCS-ID-CLINIC"],
+      "question_keywords": ["which documents"]
+    }
+  },
+  {
+    "id": "C22-house-burned",
+    "input": {
+      "id": "C22-house-burned",
+      "text": "Our house burned and we need shelter tonight, food, and replacement papers.",
+      "city": "Pine Hill",
+      "zip": "94301"
+    },
+    "expected": {
+      "needs": ["shelter", "food", "benefits", "documents"],
+      "risk_level": "urgent",
+      "include_resources": ["SHELTER-WINTER-EMERGENCY", "FOOD-SNAP-OUTREACH", "DOCS-ID-CLINIC"]
+    }
+  },
+  {
+    "id": "C23-medical-power",
+    "input": {
+      "id": "C23-medical-power",
+      "text": "My power shutoff will stop my medical device.",
+      "city": "Lakeview",
+      "zip": "94211",
+      "household": { "disability": true }
+    },
+    "expected": {
+      "needs": ["utilities", "medical", "disability"],
+      "risk_level": "urgent",
+      "include_resources": ["UTILITIES-RELIEF", "DISABILITY-ACCESS-LINE"]
+    }
+  },
+  {
+    "id": "C24-pantry-and-transport",
+    "input": {
+      "id": "C24-pantry-and-transport",
+      "text": "I need a bus pass to get to the pantry and pick up groceries.",
+      "city": "Riverside",
+      "zip": "94106"
+    },
+    "expected": {
+      "needs": ["transport", "food", "benefits"],
+      "risk_level": "standard",
+      "include_resources": ["TRANSPORT-VOUCHER", "FOOD-SNAP-OUTREACH"],
+      "question_keywords": ["pickup location"]
+    }
+  }
+]

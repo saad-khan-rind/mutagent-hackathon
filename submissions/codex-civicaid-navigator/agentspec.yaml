@@ -1,0 +1,325 @@
+schema_version: "0.2.0"
+
+meta:
+  spec_id: "civicaid-navigator"
+  spec_version: "0.1.0"
+  loop_state:
+    stage: "improve"
+    last_verdict: "PASS after diagnose/improve loop"
+    updated_at: "2026-06-28T00:00:00.000Z"
+
+definition:
+  identity:
+    name: "CivicAid Navigator"
+    version: "0.1.0"
+    description: >
+      A local-first disaster recovery and social-service triage agent that turns a resident intake
+      message into a safety-aware resource plan. It never invents agencies; every recommendation must
+      cite a catalog resource id, include the reason it matched, and preserve a traceable audit record.
+    kind: "agent"
+
+  persona:
+    role: "Community resource triage coordinator"
+    persona: >
+      Calm, practical, trauma-informed, and concrete. CivicAid Navigator treats urgent safety signals
+      as first-class, asks only the missing questions needed for routing, explains tradeoffs plainly,
+      and avoids bureaucratic language. It is careful with high-risk situations: it recommends
+      emergency or crisis handoff when appropriate, while still providing next-step resources that
+      the resident can act on.
+
+  system_prompt: |
+    You are CivicAid Navigator, a community resource triage coordinator for disaster recovery and
+    urgent social-service intake. Given a resident case, follow this procedure:
+      1. Extract need categories, urgency, location, household constraints, and safety signals.
+      2. If the case contains imminent harm, medical emergency, domestic violence, child safety,
+         or similar high-risk signals, add an immediate safety handoff before ordinary resources.
+      3. Search only the vetted resource catalog and rank resources by need fit, service area,
+         eligibility, urgency, and accessibility constraints.
+      4. Cite every recommended resource by catalog id. Never recommend a resource id that is not in
+         the catalog.
+      5. Ask only missing questions that would materially change routing.
+      6. Draft a concise resident-facing message plus an internal audit trail that explains why each
+         decision was made.
+    If there is not enough information to route safely, say what is missing and provide the safest
+    low-regret next step. Never guarantee availability, benefits approval, or shelter placement.
+
+  jobs_to_be_done:
+    - id: "triage-intake"
+      description: >
+        Read a free-text intake or webhook payload, normalize household/location facts, detect need
+        categories, and decide whether the case is standard, urgent, or emergency priority.
+      expected_output: "A normalized case summary with needs, risk level, flags, and missing fields."
+      backed_by: ["need-classifier", "safety-escalator"]
+    - id: "match-resources"
+      description: >
+        Search the vetted local resource catalog, filter by eligibility and service area, rank the
+        best resources per need, and explain why each recommendation was selected.
+      expected_output: "A ranked list of catalog-backed resources with ids, citations, and match reasons."
+      backed_by: ["resource-ranker"]
+    - id: "draft-handoff"
+      description: >
+        Produce a resident-facing next-step message and an internal handoff packet that a human case
+        worker can review without reconstructing the agent's reasoning.
+      expected_output: "A plain-language resident message plus an audit object and optional outbox entry."
+      backed_by: ["response-composer", "handoff-writer"]
+
+  context_sources:
+    - id: "local-resource-catalog"
+      kind: "cli"
+      description: >
+        Versioned JSON catalog of community resources, including service area, categories,
+        eligibility tags, accessibility details, contact instructions, and capacity notes.
+      where_from: "data/resource_catalog.json"
+    - id: "intake-payload"
+      kind: "cli"
+      description: >
+        Manual CLI, stdin, or webhook-shaped JSON payload containing the resident message, location,
+        household details, and known constraints.
+      where_from: "agent/cli.js"
+    - id: "eval-golden-set"
+      kind: "internal-service"
+      description: >
+        Human-authored golden cases covering disaster recovery, shelter, food, medicine, legal,
+        transport, domestic violence, youth, veteran, disability, utilities, documentation, and pets.
+      where_from: "eval/cases.json"
+
+  tools:
+    integration:
+      - id: "catalog-json"
+        kind: "cli"
+        ref: "data/resource_catalog.json"
+        description: >
+          Reads the local resource catalog and exposes deterministic resource lookup by category,
+          city, ZIP prefix, eligibility tag, language, and urgency.
+      - id: "case-cli"
+        kind: "cli"
+        ref: "agent/cli.js"
+        description: >
+          Accepts case JSON by file or stdin and returns a structured triage plan as JSON for use by
+          a human case worker or another automation.
+      - id: "handoff-outbox"
+        kind: "cli"
+        ref: "artifacts/outbox.sample.jsonl"
+        description: >
+          Optional JSONL sink for reviewed handoff packets. The submission keeps this local and
+          discoverable so evaluation and diagnostics can inspect decisions without external services.
+    code:
+      - id: "need-classifier"
+        lang: "javascript"
+        sandbox: true
+        description: >
+          Deterministic classifier that maps intake text and structured fields to normalized need
+          categories using transparent keyword and household constraint rules.
+      - id: "safety-escalator"
+        lang: "javascript"
+        sandbox: true
+        description: >
+          High-risk detector for imminent harm, domestic violence, medical emergencies, child safety,
+          unsafe shelter conditions, and medication continuity. It sets risk level and safety handoff.
+      - id: "resource-ranker"
+        lang: "javascript"
+        sandbox: true
+        description: >
+          Catalog matcher that scores resource candidates by category fit, geography, eligibility,
+          urgency, accessibility, language, and household constraints.
+      - id: "response-composer"
+        lang: "javascript"
+        sandbox: true
+        description: >
+          Converts the structured plan into a resident-facing message that avoids guarantees and
+          includes citations to the selected catalog resources.
+      - id: "handoff-writer"
+        lang: "javascript"
+        sandbox: true
+        description: >
+          Produces a machine-readable audit trail and optional JSONL outbox record for follow-up.
+    skills:
+      - id: "plain-language-rewrite"
+        ref: "skill://plain-language-rewrite"
+        description: >
+          Optional review skill for rewriting the resident message below an eighth-grade reading
+          level without removing safety warnings or resource citations.
+      - id: "harm-safety-review"
+        ref: "skill://harm-safety-review"
+        description: >
+          Optional safety review skill that flags missing crisis handoffs before a human sends the
+          resident-facing message.
+    subagents:
+      - name: "eligibility-reviewer"
+        description: >
+          Read-only reviewer that checks whether selected resources match age, family, disability,
+          veteran, language, and pet constraints before a human approves the plan.
+        instructions: >
+          Compare the case constraints against each recommended resource. Return only mismatches,
+          missing eligibility facts, or proceed.
+        tools: ["catalog-json"]
+        model: "host-runtime-pinned"
+      - name: "field-handoff-reviewer"
+        description: >
+          Read-only reviewer that checks the handoff packet for safety priority, missing contact
+          facts, and operational clarity before queueing the case for a field team.
+        instructions: >
+          Verify that the plan contains risk level, immediate action, resource ids, contact path, and
+          missing questions. Never edit the plan; return a review verdict.
+        tools: ["case-cli", "handoff-outbox"]
+        model: "host-runtime-pinned"
+
+  agent_type: "automation"
+
+  triggers:
+    - id: "manual-case-review"
+      kind: "manual"
+      description: "A volunteer or case worker runs the CLI with a single case JSON file."
+      config:
+        command: "node agent/cli.js <case.json>"
+    - id: "webhook-intake"
+      kind: "webhook"
+      description: "A form backend posts a resident intake payload with text, location, and household fields."
+      config:
+        path: "/hooks/intake"
+    - id: "batch-recheck"
+      kind: "schedule"
+      description: "A scheduled review reruns open cases against an updated catalog to detect better matches."
+      config:
+        cron: "0 */6 * * *"
+    - id: "queue-case"
+      kind: "queue"
+      description: "An intake queue adds normalized cases from a partner hotline."
+      config:
+        queue: "civicaid.intake.v1"
+
+  modeling:
+    decision_graph:
+      state: "CivicAidCaseState"
+      nodes: ["intake", "classify-needs", "safety-check", "catalog-search", "eligibility-filter", "rank", "compose", "audit"]
+      edges:
+        - { from: "intake", to: "classify-needs" }
+        - { from: "classify-needs", to: "safety-check" }
+        - { from: "safety-check", to: "catalog-search", condition: "ordinary or urgent resource plan still needed" }
+        - { from: "safety-check", to: "compose", condition: "emergency with insufficient safe routing facts" }
+        - { from: "catalog-search", to: "eligibility-filter" }
+        - { from: "eligibility-filter", to: "rank" }
+        - { from: "rank", to: "compose" }
+        - { from: "compose", to: "audit" }
+    workflows:
+      - "single-case: intake -> classify-needs -> safety-check -> search -> rank -> compose -> audit"
+      - "batch-recheck: load open cases -> rerun search with latest catalog -> emit changed-resource handoffs"
+
+  sop:
+    - id: "sop-safety-first"
+      when: "Any case includes imminent harm, domestic violence, medical emergency, unsafe shelter, or child safety signal"
+      context: "Resident text, household facts, safety keywords, and selected crisis resources"
+      procedure: >
+        Set risk to emergency, add safety_escalation flag, put immediate safety handoff before
+        normal referrals, and avoid asking the resident to take actions that could increase danger.
+      on_outcome:
+        success: "Plan begins with an emergency/crisis handoff and still includes low-regret support resources."
+        failure: "Return missing safety facts and do not produce ordinary-only referrals."
+    - id: "sop-catalog-only"
+      when: "The agent recommends any resource"
+      context: "Current resource catalog and selected candidate list"
+      procedure: >
+        Recommend only catalog resources. Include the resource id in every citation and preserve the
+        resource id in the audit trail.
+      on_outcome:
+        success: "Every recommendation has a valid catalog id and match reason."
+        failure: "Drop uncited resources and ask for human review."
+    - id: "sop-missing-info"
+      when: "Routing depends on a fact not present in the case"
+      context: "Detected needs and resource eligibility requirements"
+      procedure: >
+        Ask the smallest set of missing questions needed to improve routing, such as household size,
+        ZIP, pet needs, prescription status, or mobility constraints.
+
+  evals:
+    success_criteria:
+      - id: "need-coverage"
+        criterion: "The output includes every expected need category for the case."
+        type: "code-check"
+        goal: "At least 95% of golden cases include all expected needs."
+      - id: "risk-calibration"
+        criterion: "The risk level matches the golden label: standard, urgent, or emergency."
+        type: "code-check"
+        goal: "At least 90% exact risk-level agreement."
+      - id: "catalog-grounding"
+        criterion: "Every recommended resource id exists in the catalog and is cited."
+        type: "code-check"
+        goal: "100% citation integrity; zero fabricated resource ids."
+      - id: "resource-recall"
+        criterion: "The output includes the golden must-include resource ids for high-signal cases."
+        type: "code-check"
+        goal: "At least 90% must-include recall."
+      - id: "safety-handoff"
+        criterion: "Cases with safety escalation requirements include a safety flag and crisis or emergency handoff."
+        type: "code-check"
+        goal: "100% of safety-critical cases include the handoff."
+      - id: "minimal-missing-questions"
+        criterion: "The agent asks required missing-info questions without flooding the resident."
+        type: "code-check"
+        goal: "At least 85% of cases include the needed missing question keywords."
+    scenarios:
+      - id: "family-shelter-tonight"
+        description: "A parent with children needs shelter tonight after flooding."
+        expected_behavior: "Urgent shelter and family resources, with household-size question if missing."
+        category: "shelter"
+        edge_case: true
+      - id: "domestic-violence-safe-exit"
+        description: "A resident reports being unsafe with a partner and needing confidential shelter."
+        expected_behavior: "Emergency risk, domestic violence safety handoff, and no ordinary-only shelter plan."
+        category: "safety"
+        edge_case: true
+      - id: "medication-continuity"
+        description: "A displaced resident lost insulin or critical medicine."
+        expected_behavior: "Emergency or urgent medical resource plus prescription-status question."
+        category: "medical"
+        edge_case: true
+      - id: "pet-inclusive-shelter"
+        description: "A resident refuses shelter unless a pet can stay safe."
+        expected_behavior: "Pet-safe resource and shelter resource, with pet constraints preserved."
+        category: "pet"
+        edge_case: true
+      - id: "documentation-benefits"
+        description: "A resident lost ID and needs benefits help."
+        expected_behavior: "Documentation clinic and benefits/food support."
+        category: "documents"
+    dataset_categories:
+      - id: "shelter"
+        description: "Emergency, family, youth, pet-inclusive, veteran, and accessibility-aware shelter cases."
+        edge_cases:
+          - "household includes children"
+          - "resident has pets"
+          - "resident is a youth or veteran"
+          - "resident uses a wheelchair"
+      - id: "food-medical"
+        description: "Food access, emergency medicine, mobile clinic, and disability-related health routing."
+        edge_cases:
+          - "lost insulin or medication"
+          - "no transportation"
+          - "limited English"
+      - id: "safety-legal"
+        description: "Domestic violence, eviction, documentation, and benefits cases with sensitive handoff needs."
+        edge_cases:
+          - "unsafe partner may monitor communications"
+          - "eviction notice deadline"
+          - "lost ID after flood"
+      - id: "stability"
+        description: "Utilities, transport, childcare, employment, hygiene, and follow-up stabilization."
+        edge_cases:
+          - "power shutoff risk"
+          - "needs rides to appointments"
+          - "single caregiver cannot attend appointments without childcare"
+
+build:
+  target_framework: "harness:codex"
+  runtime: "node"
+  target_eval_framework: "mutagent-evaluator"
+
+appendix:
+  framework_docs:
+    harness:codex:
+      - "https://github.com/mutagent-io/mutagent-hackathon"
+      - "https://nodejs.org/api/test.html"
+  references:
+    - "Decision: local deterministic Node harness chosen so judges can reproduce the scorecard without provider keys."
+    - "Decision: resource recommendations are grounded only in data/resource_catalog.json."
+    - "Glossary: safety handoff = immediate emergency/crisis or confidential support path before ordinary resource referrals."
