@@ -1,0 +1,203 @@
+{
+  "catalog_version": "2026-06-28",
+  "resources": [
+    {
+      "id": "SHELTER-FAMILY-NORTH",
+      "name": "North County Family Shelter Desk",
+      "categories": ["shelter"],
+      "urgency": "urgent",
+      "service_area": { "cities": ["Riverside", "Lakeview"], "zip_prefixes": ["941", "942"] },
+      "eligibility": { "families": true, "open_to_all": true },
+      "languages": ["English", "Spanish"],
+      "contact": "Call 555-0101 for same-day family shelter screening.",
+      "summary": "Family-focused shelter placement desk for flood and fire displacement."
+    },
+    {
+      "id": "SHELTER-WINTER-EMERGENCY",
+      "name": "Emergency Warming and Overnight Shelter Line",
+      "categories": ["shelter"],
+      "urgency": "emergency",
+      "service_area": { "statewide": true },
+      "eligibility": { "open_to_all": true },
+      "languages": ["English", "Spanish", "Vietnamese"],
+      "contact": "Call 555-0102 after 4pm for overnight placement.",
+      "summary": "After-hours warming and emergency overnight shelter triage."
+    },
+    {
+      "id": "DV-SAFE-HARBOR",
+      "name": "Safe Harbor Confidential Advocacy",
+      "categories": ["safety", "legal", "shelter"],
+      "urgency": "emergency",
+      "service_area": { "statewide": true },
+      "eligibility": { "domestic_violence": true },
+      "languages": ["English", "Spanish"],
+      "contact": "Call 555-0199 from a safe phone; chat available through partner hotline.",
+      "summary": "Confidential domestic violence advocacy, safety planning, and shelter connection."
+    },
+    {
+      "id": "FOOD-PANTRY-LAKE",
+      "name": "Lakeview Mutual Aid Pantry",
+      "categories": ["food"],
+      "urgency": "standard",
+      "service_area": { "cities": ["Lakeview"], "zip_prefixes": ["942"] },
+      "eligibility": { "open_to_all": true },
+      "languages": ["English", "Spanish"],
+      "contact": "Walk-up pantry Tue/Thu/Sat 10am-2pm at 88 Cedar St.",
+      "summary": "Groceries, diapers, and formula while supplies last."
+    },
+    {
+      "id": "FOOD-SNAP-OUTREACH",
+      "name": "Benefits and SNAP Outreach Team",
+      "categories": ["food", "benefits"],
+      "urgency": "standard",
+      "service_area": { "statewide": true },
+      "eligibility": { "open_to_all": true },
+      "languages": ["English", "Spanish", "Vietnamese"],
+      "contact": "Call 555-0103 for SNAP screening and emergency food referrals.",
+      "summary": "Benefits screening and food assistance navigation."
+    },
+    {
+      "id": "MED-MOBILE-CLINIC",
+      "name": "Mobile Recovery Clinic",
+      "categories": ["medical"],
+      "urgency": "urgent",
+      "service_area": { "counties": ["North County", "South County"], "cities": ["Riverside", "Pine Hill"] },
+      "eligibility": { "open_to_all": true },
+      "languages": ["English", "Spanish"],
+      "contact": "Call 555-0104 for clinic stop schedule.",
+      "summary": "Basic urgent care, wound checks, and medication bridge referrals."
+    },
+    {
+      "id": "RX-EMERGENCY-BRIDGE",
+      "name": "Emergency Prescription Bridge Desk",
+      "categories": ["medical"],
+      "urgency": "emergency",
+      "service_area": { "statewide": true },
+      "eligibility": { "open_to_all": true },
+      "languages": ["English", "Spanish"],
+      "contact": "Call 555-0105; bring bottle, label, or clinic contact if available.",
+      "summary": "Same-day routing for lost critical medicine, insulin, oxygen, and urgent refills."
+    },
+    {
+      "id": "MENTAL-CRISIS-988",
+      "name": "Crisis Support and Stabilization Line",
+      "categories": ["mental_health", "safety"],
+      "urgency": "emergency",
+      "service_area": { "statewide": true },
+      "eligibility": { "open_to_all": true },
+      "languages": ["English", "Spanish"],
+      "contact": "Call or text 988 for immediate crisis support.",
+      "summary": "Immediate mental health crisis support and local stabilization referral."
+    },
+    {
+      "id": "LEGAL-AID-HOUSING",
+      "name": "Housing and Disaster Legal Aid",
+      "categories": ["legal"],
+      "urgency": "urgent",
+      "service_area": { "statewide": true },
+      "eligibility": { "open_to_all": true },
+      "languages": ["English", "Spanish"],
+      "contact": "Call 555-0106 and mention eviction, lockout, FEMA, or benefits deadline.",
+      "summary": "Eviction defense, disaster-benefits appeals, and tenant legal help."
+    },
+    {
+      "id": "TRANSPORT-VOUCHER",
+      "name": "Recovery Ride Voucher Desk",
+      "categories": ["transport"],
+      "urgency": "standard",
+      "service_area": { "cities": ["Riverside", "Lakeview", "Pine Hill"], "zip_prefixes": ["941", "942", "943"] },
+      "eligibility": { "open_to_all": true },
+      "languages": ["English"],
+      "contact": "Call 555-0107 with pickup location, destination, and appointment time.",
+      "summary": "Bus passes, rideshare vouchers, and medical appointment rides."
+    },
+    {
+      "id": "DOCS-ID-CLINIC",
+      "name": "Lost Documents Recovery Clinic",
+      "categories": ["documents", "benefits"],
+      "urgency": "standard",
+      "service_area": { "statewide": true },
+      "eligibility": { "open_to_all": true },
+      "languages": ["English", "Spanish", "Vietnamese"],
+      "contact": "Call 555-0108 for ID, birth certificate, and benefits paperwork help.",
+      "summary": "Document replacement and benefits application support after disaster loss."
+    },
+    {
+      "id": "VETERAN-OUTREACH",
+      "name": "Veteran Recovery Outreach Team",
+      "categories": ["veteran", "shelter", "benefits"],
+      "urgency": "urgent",
+      "service_area": { "statewide": true },
+      "eligibility": { "veterans": true },
+      "languages": ["English"],
+      "contact": "Call 555-0109 for veteran shelter, benefits, and VA coordination.",
+      "summary": "Veteran-specific outreach for shelter, documentation, and benefits."
+    },
+    {
+      "id": "DISABILITY-ACCESS-LINE",
+      "name": "Disability Access and Mobility Line",
+      "categories": ["disability", "transport", "medical"],
+      "urgency": "urgent",
+      "service_area": { "statewide": true },
+      "eligibility": { "disability": true },
+      "languages": ["English", "Spanish"],
+      "contact": "Call 555-0110 for accessible transport, DME, and medical access support.",
+      "summary": "Mobility-device, durable medical equipment, and accessible transport support."
+    },
+    {
+      "id": "YOUTH-DROPIN",
+      "name": "Youth Drop-In and Shelter Link",
+      "categories": ["youth", "shelter", "food"],
+      "urgency": "urgent",
+      "service_area": { "statewide": true },
+      "eligibility": { "youth": true },
+      "languages": ["English", "Spanish"],
+      "contact": "Call 555-0111 or visit the youth drop-in before 7pm.",
+      "summary": "Youth-focused drop-in, food, shower, and shelter connection."
+    },
+    {
+      "id": "PET-SAFE-SHELTER",
+      "name": "Pet-Safe Shelter Coordination",
+      "categories": ["pet", "shelter"],
+      "urgency": "urgent",
+      "service_area": { "statewide": true },
+      "eligibility": { "pets": true },
+      "languages": ["English"],
+      "contact": "Call 555-0112 for pet-friendly shelter or temporary foster options.",
+      "summary": "Pet-inclusive shelter coordination and temporary pet foster placement."
+    },
+    {
+      "id": "UTILITIES-RELIEF",
+      "name": "Emergency Utilities Relief Desk",
+      "categories": ["utilities"],
+      "urgency": "urgent",
+      "service_area": { "statewide": true },
+      "eligibility": { "open_to_all": true },
+      "languages": ["English", "Spanish"],
+      "contact": "Call 555-0113 with account number, shutoff date, and medical baseline needs.",
+      "summary": "Power, water, and heating shutoff prevention after disaster hardship."
+    },
+    {
+      "id": "CHILDCARE-RESPITE",
+      "name": "Emergency Childcare Respite Network",
+      "categories": ["childcare"],
+      "urgency": "standard",
+      "service_area": { "cities": ["Riverside", "Lakeview"], "zip_prefixes": ["941", "942"] },
+      "eligibility": { "families": true },
+      "languages": ["English", "Spanish"],
+      "contact": "Call 555-0114 for short-term childcare slots during appointments or cleanup.",
+      "summary": "Short-term childcare help for disaster recovery appointments and cleanup."
+    },
+    {
+      "id": "HYGIENE-MOBILE",
+      "name": "Mobile Shower and Laundry Unit",
+      "categories": ["hygiene"],
+      "urgency": "standard",
+      "service_area": { "cities": ["Riverside", "Lakeview", "Pine Hill"], "zip_prefixes": ["941", "942", "943"] },
+      "eligibility": { "open_to_all": true },
+      "languages": ["English", "Spanish"],
+      "contact": "Call 555-0115 for this week's shower and laundry stop schedule.",
+      "summary": "Mobile showers, laundry, hygiene kits, diapers, and clean clothes."
+    }
+  ]
+}

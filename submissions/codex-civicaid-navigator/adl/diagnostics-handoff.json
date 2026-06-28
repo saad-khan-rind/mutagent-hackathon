@@ -1,0 +1,6 @@
+{
+  "command": "*diagnose",
+  "subject": "civicaid-navigator",
+  "verdict": "pass",
+  "failures": []
+}

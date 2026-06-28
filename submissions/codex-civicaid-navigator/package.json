@@ -1,0 +1,13 @@
+{
+  "name": "codex-civicaid-navigator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Mutagent hackathon submission: CivicAid Navigator agent with deterministic eval suite.",
+  "scripts": {
+    "agent": "node agent/cli.js",
+    "evaluate": "node eval/run-evals.js",
+    "test": "node --test",
+    "risk-drill": "node extensions/risk-drill/scripts/risk-drill.js"
+  }
+}

@@ -22,9 +22,15 @@ traces/
 # Mutagent framework — installed locally via `bunx @mutagent/helix init`.
 # Kept on disk (usable), never committed to main — fresh-install is tested separately.
 .claude/
+.agents/
 .codex/
 CLAUDE.md
 AGENTS.md
 package.json
 package-lock.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
 bun.lock
+
+# submission projects may include their own runnable package manifests
+!submissions/**/package.json
